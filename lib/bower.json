@@ -1,0 +1,21 @@
+{
+  "name": "ts-capstone-DoughnutFightClub",
+  "description": "",
+  "main": "index.js",
+  "authors": [],
+  "license": "MIT",
+  "homepage": "https://github.com/tkylesh/ts-capstone-DoughnutFightClub",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8"
+  }
+}
