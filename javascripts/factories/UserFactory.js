@@ -1,35 +1,38 @@
 "use strict";
-
 app.factory("UserFactory", function($q, $http, FIREBASE_CONFIG){
 
-	var postUser = function(authData){
-		return $q((resolve, reject)=>{
-			$http.post(`${FIREBASE_CONFIG.databaseURL}/users.json`, JSON.stringify({
-				uid: authData.uid,
-				username: authData.username
-			}))
-			.success(function(postResponse){
-				resolve(postResponse);
+	let addUser = (authData) => {
+		return $q((resolve, reject) => {
+			$http.post(`${FIREBASE_CONFIG.databaseURL}/users.json`, 
+				JSON.stringify({
+					uid: authData.uid,
+					username: authData.username
+				})
+			)
+			.success(function(storeUserSuccess){
+				resolve(storeUserSuccess);
 			})
-			.error(function(postError){
-				reject(postError);
+			.error(function(storeUserError){
+				reject(storeUserError);
 			});
 		});
 	};
 
-	var getUser = function(userId){
-		return $q((resolve, reject)=>{
+	let getUser = (userId) =>{
+		return $q((resolve, reject) => {
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/users.json?orderBy="uid"&equalTo="${userId}"`)
-			.success(function(response){
+			.success(function(userObject){
 				let users = [];
-				Object.keys(response).forEach(function(key){
-					users.push(response[key]);
+				Object.keys(userObject).forEach(function(key){
+					users.push(userObject[key]);
 				});
 				resolve(users[0]);
-			}).error(function(error){
+			})
+			.error(function(error){
 				reject(error);
 			});
 		});
 	};
-return {postUser: postUser, getUser: getUser};
+
+	return {addUser:addUser, getUser:getUser};
 });

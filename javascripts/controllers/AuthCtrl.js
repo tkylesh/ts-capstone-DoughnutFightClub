@@ -1,53 +1,47 @@
-"use strict"; 
+"use strict";
 
-app.controller("AuthCtrl", function($scope, $location, $rootScope, AuthFactory, UserFactory){
-
-	$scope.signInContainer = true;
+app.controller("AuthCtrl", function($scope, $rootScope, $location, AuthFactory, UserFactory){
+	$scope.loginContainer = true;
 	$scope.registerContainer = false;
-	$scope.signIn = {
-		email: "e@e.com",
-		password:"123456"
-	};
 
 	if($location.path() === "/logout"){
 		AuthFactory.logout();
-		$rootScope.user = {};
+		$rootScope.user ={};
 		$location.url("/auth");
 	}
 
-	var signMeIn = function(signInInfo){
-		AuthFactory.authenticate(signInInfo)
-		.then(function(didSignIn){
-			return UserFactory.getUser(didSignIn.uid);
-		})
-		.then(function(userCreds){
+	let logMeIn = function(loginStuff){
+		AuthFactory.authenticate(loginStuff).then(function(didLogin){
+			console.log("didLogin", didLogin);
+			return UserFactory.getUser(didLogin.uid);
+		}).then(function(userCreds){
 			$rootScope.user = userCreds;
 			$scope.login = {};
 			$scope.register = {};
-			$location.url("/pins/list");
+			// $location.url("/items/list");
 		});
 	};
 
-	$scope.setSignInContainer = function(){
-		$scope.signInContainer = true;
+	$scope.setLoginContainer = function(){
+		$scope.loginContainer = true;
 		$scope.registerContainer = false;
 	};
+
 	$scope.setRegisterContainer = function(){
-		$scope.signInContainer = false;
+		$scope.loginContainer = false;
 		$scope.registerContainer = true;
 	};
-	$scope.registerNewUser = function(registerUser){
-		AuthFactory.registerWithEmail(registerUser)
-		.then(function(didRegister){
-			registerUser.uid = didRegister.uid;
-			return UserFactory.postUser(registerUser);
-		}).then(function(completeRegistration){
-			signMeIn(registerUser);
+
+	$scope.registerUser = function(registerNewUser){
+		AuthFactory.registerWithEmail(registerNewUser).then(function(didRegister){
+			registerNewUser.uid = didRegister.uid;
+			return UserFactory.addUser(registerNewUser);
+		}).then(function(registerComplete){
+			logMeIn(registerNewUser);
 		});
 	};
-	$scope.signInUser = function(SingIn){
-		signMeIn(SingIn);
+
+	$scope.loginUser = function(loginNewUser){
+		logMeIn(loginNewUser);
 	};
-
-
 });
