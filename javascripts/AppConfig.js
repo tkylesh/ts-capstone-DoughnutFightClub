@@ -33,5 +33,25 @@ app.config(function($routeProvider){
 			templateUrl:'partials/auth.html',
 			controller: 'AuthCtrl'
 		})
+    .when('/diary',{
+      templateUrl:'partials/diary.html',
+      controller: 'DiaryCtrl',
+      resolve: {isAuth} 
+    })
+    .when('/search',{
+      templateUrl:'partials/search.html',
+      controller: 'SearchCtrl',
+      resolve: {isAuth} 
+    })
+    .when('/addmeal',{
+      templateUrl:'partials/addmeal.html',
+      controller: 'AddMealCtrl',
+      resolve: {isAuth} 
+    })
+    .when('/logout', {
+      templateUrl:'partials/auth.html',
+      controller: 'AuthCtrl',
+      resolve: {isAuth} 
+    })
 		.otherwise('/auth');
 });
