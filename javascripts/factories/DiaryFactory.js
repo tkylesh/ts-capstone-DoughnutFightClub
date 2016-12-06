@@ -6,12 +6,12 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		return $q((resolve, reject)=>{
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/logs.json?orderBy="uid"&equalTo="${userId}"`)
 			 .success( (response)=>{
-			 	// let Boards=[];
-			 	// Object.keys(response).forEach((key)=>{
-			 	// 	response[key].id = key;
-			 	// 	boards.push(response[key]);
-			 	// });
-			 	resolve(response);
+			 	let diaries=[];
+			 	Object.keys(response).forEach((key)=>{
+			 		response[key].id = key;
+			 		diaries.push(response[key]);
+			 	});
+			 	resolve(diaries);
 			 })
 			 .error( (errorResponse)=>{
 			 	reject(errorResponse);

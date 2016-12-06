@@ -1,10 +1,10 @@
 "use strict";
 
 app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory){
-	$scope.Diary = {};
+	$scope.diaries = [];
 
-	DiaryFactory.getDiary($rootScope.user.uid).then(function(diary) {
-		$scope.Diary = diary;
-		console.log($scope.Diary);
+	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+		$scope.diaries = FbDiaries;
+		console.log($scope.diaries);
 	});
 });
