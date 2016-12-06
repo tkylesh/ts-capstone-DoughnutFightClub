@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("AddDiaryCtrl", function($scope, $rootScope, $location, DiaryFactory){
+app.controller("AddDiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, LogFactory){
 
 	$scope.newDiary = {};
 

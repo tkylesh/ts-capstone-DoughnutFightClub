@@ -24,7 +24,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		return $q((resolve, reject)=>{
 			$http.post(`${FIREBASE_CONFIG.databaseURL}/logs.json`, JSON.stringify({
 				title: newDiary.title,
-				uid: newDiary.uid
+				uid: newDiary.uid,
 				})
 			)
 			 .success( (postResponse)=>{

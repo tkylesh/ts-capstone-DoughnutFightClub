@@ -4,6 +4,7 @@
 					"uid":"V4fsdnuSTEgRn92983N3Fu26B4R2",
 					"title":"Diary0",
 					"log0":{
+						"diaryid":"Diary0",
 						"date":"12/06/2016",
 						"meals":{
 							"meal0":{
@@ -37,6 +38,7 @@
 					"uid":"DQezqbQxTFV9FO2zjTeZ0EIrY8J2",
 					"title":"Diary1",
 					"log0":{
+						"diaryid":"Diary1",
 						"date":"12/06/2016",
 						"meals":{
 							"meal0":{

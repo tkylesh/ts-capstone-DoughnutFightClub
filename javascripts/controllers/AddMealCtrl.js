@@ -1,5 +1,5 @@
 "use strict";
 
-app.controller("AddMealCtrl", function($scope, $rootScope, $location){
+app.controller("AddMealCtrl", function($scope, $rootScope, $location, DiaryFactory){
 
 });
