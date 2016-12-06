@@ -18,7 +18,7 @@ app.controller("AuthCtrl", function($scope, $rootScope, $location, AuthFactory, 
 			$rootScope.user = userCreds;
 			$scope.login = {};
 			$scope.register = {};
-			// $location.url("/items/list");
+			$location.url("/diary");
 		});
 	};
 
