@@ -13,6 +13,10 @@ app.controller("NavCtrl", function($scope, $rootScope){ // NAV CONTROLLER LINE 4
 		url: "#/diary"
 	},
 	{
+		name:"Add Diary",
+		url:"#/adddiary"
+	},
+	{
 		name:"Add Meal",
 		url:"#/addmeal"
 	},

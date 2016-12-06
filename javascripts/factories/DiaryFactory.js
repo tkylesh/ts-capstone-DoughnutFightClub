@@ -19,31 +19,31 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		});
 	};
 
+	//Firebase: send a new item to Firebase
+	var postNewDiary = function(newDiary){
+		return $q((resolve, reject)=>{
+			$http.post(`${FIREBASE_CONFIG.databaseURL}/logs.json`, JSON.stringify({
+				title: newDiary.title,
+				uid: newDiary.uid
+				})
+			)
+			 .success( (postResponse)=>{
+			 	resolve(postResponse);
+			 })
+			 .error( (errorResponse)=>{
+			 	reject(errorResponse);
+			 });
+		});
+	};
+
 	return {
-		getDiary:getDiary
+		getDiary:getDiary,
+		postNewDiary:postNewDiary
 	};
 });
 
 
-// "use strict";
-// app.factory("BoardFactory", function($q, $http, FIREBASE_CONFIG){
-// 	//Firebase: get all Items
-// 	var getBoardList = function(userId){
-// 		return $q((resolve, reject)=>{
-// 			$http.get(`${FIREBASE_CONFIG.databaseURL}/boards.json?orderBy="uid"&equalTo="${userId}"`)
-// 			 .success( (response)=>{
-// 			 	let boards = [];
-// 			 	Object.keys(response).forEach((key)=>{
-// 			 		response[key].id = key;
-// 			 		boards.push(response[key]);
-// 			 	});
-// 			 	resolve(boards);
-// 			 })
-// 			 .error( (errorResponse)=>{
-// 			 	reject(errorResponse);
-// 			 });
-// 		});
-// 	};
+
 // 	//Firebase: send a new item to Firebase
 // 	var postNewBoard = function(newBoard){
 // 		return $q((resolve, reject)=>{

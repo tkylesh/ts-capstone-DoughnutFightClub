@@ -48,6 +48,11 @@ app.config(function($routeProvider){
       controller: 'AddMealCtrl',
       resolve: {isAuth} 
     })
+    .when('/adddiary',{
+      templateUrl:'partials/add-diary.html',
+      controller: 'AddDiaryCtrl',
+      resolve: {isAuth} 
+    })
     .when('/logout', {
       templateUrl:'partials/auth.html',
       controller: 'AuthCtrl',
