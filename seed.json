@@ -1,0 +1,82 @@
+{
+	"logs": {
+				"Diary0":{
+					"uid":"V4fsdnuSTEgRn92983N3Fu26B4R2",
+					"title":"Diary0",
+					"log0":{
+						"diaryid":"Diary0",
+						"date":"12/06/2016",
+						"meals":{
+							"meal0":{
+								"totalCalories":"500",
+								"totalFat":"20",
+								"totalProtein":"45",
+								"totalSugars":"15",
+								"totalSodium":"200",
+								"ingredients":{
+									"chicken":{
+										"calories":"300",
+										"fat":"15",
+										"protein":"44",
+										"sugars":"10",
+										"sodium":"100"
+									},
+									"broccoli":{
+										"calories":"200",
+										"fat":"5",
+										"protein":"1",
+										"sugars":"5",
+										"sodium":"100"
+									}
+								}
+
+							}
+						}
+					}
+				},
+				"Diary1":{
+					"uid":"DQezqbQxTFV9FO2zjTeZ0EIrY8J2",
+					"title":"Diary1",
+					"log0":{
+						"diaryid":"Diary1",
+						"date":"12/06/2016",
+						"meals":{
+							"meal0":{
+								"totalCalories":"600",
+								"totalFat":"30",
+								"totalProtein":"50",
+								"totalSugars":"14",
+								"totalSodium":"250",
+								"ingredients":{
+									"steak":{
+										"calories":"400",
+										"fat":"15",
+										"protein":"48",
+										"sugars":"2",
+										"sodium":"150"
+									},
+									"potatoes":{
+										"calories":"200",
+										"fat":"15",
+										"protein":"2",
+										"sugars":"12",
+										"sodium":"100"
+									}
+								}
+
+							}
+						}
+					}
+				}
+	},
+	"users":{
+		"user0":{
+			"uid": "V4fsdnuSTEgRn92983N3Fu26B4R2",
+			"username":"b"
+		},
+		"user1":{
+			"uid": "DQezqbQxTFV9FO2zjTeZ0EIrY8J2",
+			"username":"a"
+		}
+	}
+}

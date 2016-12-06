@@ -9,7 +9,9 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 			$q((resolve,reject) =>{
 
 				let authPart =`appId=${NUTRITIONIXAPIKEY.appId}&appKey=${NUTRITIONIXAPIKEY.appKey}`;
-					$http.get(`https://api.nutritionix.com/v1_1/search/${searchText}?&${authPart}`)
+				let filter = 'fields=item_name,item_id,brand_name,brand_id,item_type,nf_calories,nf_total_fat,nf_sugars,nf_sodium,nf_protein';
+
+					$http.get(`https://api.nutritionix.com/v1_1/search/${searchText}?${filter}&${authPart}`)
 						.success( (response) => {
 						console.log('nutrix response', response);
 						resolve(response.hits);
