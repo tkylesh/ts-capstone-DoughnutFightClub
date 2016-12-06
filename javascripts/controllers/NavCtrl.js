@@ -10,15 +10,15 @@ app.controller("NavCtrl", function($scope, $rootScope){ // NAV CONTROLLER LINE 4
 	},
 	{
 		name:"Diary",
-		url: "#/auth"
+		url: "#/diary"
 	},
 	{
 		name:"Add Meal",
-		url:"#/auth"
+		url:"#/addmeal"
 	},
 	{
 		name:"Search Ingredients",
-		url:"#/auth"
+		url:"#/search"
 	}
 	];
 });

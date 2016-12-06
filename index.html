@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Doughnut Fight Club</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"><!-- font awesome -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- google-icons-->
 		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><!-- bootstrap -->
@@ -8,31 +9,34 @@
 </head>
 <body ng-app="ts-capstone-DoughnutFightClub">
 	<div ng-include="'./partials/navbar.html'"></div>
-	<div class="container-fluid">
+	<div class="container">
 			<div class="row">
             <h1>Doughnut Fight Club</h1>
             <div class="col-xs-offset-2 col-xs-8" ng-view></div>
         </div>
 	</div>
 
-		<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script> <!-- firebase -->
+		<script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script> <!-- firebase -->
 		<script type="text/javascript" src="/lib/bower_components/jquery/dist/jquery.min.js"></script> <!-- jquery -->
 		<script type="text/javascript" src="/lib/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
-		<script type="text/javascript" src="/lib/bower_components/angular/angular.min.js"></script> <!-- angular -->
+		<script type="text/javascript" src="/lib/bower_components/angular/angular.min.js"></script><!-- angular -->
 		<script type="text/javascript" src="/lib/bower_components/angular-route/angular-route.min.js"></script> <!-- angular-route -->
 
 
 		
-		<script src="/javascripts/app.js"></script>
-		<script src="/javascripts/AppConstants.js"></script>
-		<script src="/javascripts/AppConfig.js"></script>
+		<script type="text/javascript" src="/javascripts/app.js"></script>
+		<script type="text/javascript" src="/javascripts/AppConstants.js"></script>
+		<script type="text/javascript" src="/javascripts/AppConfig.js"></script>
 
-		<script src="/javascripts/factories/AuthFactory.js"></script>
-		<script src="/javascripts/factories/UserFactory.js"></script>
+		<script type="text/javascript" src="/javascripts/factories/AuthFactory.js"></script>
+		<script type="text/javascript" src="/javascripts/factories/UserFactory.js"></script>
+		<script type="text/javascript" src="/javascripts/factories/NutrixFactory.js"></script>
 		
 
-		<script src="/javascripts/controllers/AuthCtrl.js"></script>
-		<script src="/javascripts/controllers/NavCtrl.js"></script>
-		<script src="/javascripts/controllers/DiaryCtrl.js"></script>
+		<script type="text/javascript" src="/javascripts/controllers/AuthCtrl.js"></script>
+		<script type="text/javascript" src="/javascripts/controllers/NavCtrl.js"></script>
+		<script type="text/javascript" src="/javascripts/controllers/SearchCtrl.js"></script>
+		<script type="text/javascript" src="/javascripts/controllers/DiaryCtrl.js"></script>
+		<script type="text/javascript" src="/javascripts/controllers/AddMealCtrl.js"></script>
 </body>
 </html>
