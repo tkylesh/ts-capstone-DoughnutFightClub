@@ -7,7 +7,27 @@
             <button type="button" class="waves-effect waves-light btn col s2 offset-s1" ng-click="NutrixSearch()" id="searchBtn"><i class="small material-icons">search</i></button> 
     </div>
 </div>
-<div class="row" id="nutrixReturn">
-<!--3 cards per row results-->
-  <div class="card"><!--will contain search results in individual cards--></div>
+<div class="row">
+	<h3 class="col s7 offset-s5"></h3>
+	<div ng-repeat="result in searchResults">
+		<div class="card small col s3 offset-s1">
+	       	
+	        <div class="card-content">
+	          	<span class="card-title activator grey-text text-darken-4">{{result.fields.item_name}}<i class="material-icons right">more_vert</i></span>
+	        </div>
+	        <div class="card-reveal">
+      			<span class="card-title grey-text text-darken-4" id="cardTest" ng-click="reEnable()">{{result.fields.item_name}}<i class="material-icons right" >close</i></span>
+      			<div class="card-action">
+	      			<label ng-show="boardsArray.length">Select Board</label>
+					<!-- <select ng-model="selectedOption" material-select ng-show="boardsArray.length">
+		  				<option value="">---Please select---</option> <!-- not selected / blank option -->
+		  				<!-- <option value="createNewBoard" href="#/boards/new" ng-show="!boardsArray.length">Create new board</option>  -->
+		  				<!-- <option ng-repeat="boardArray in boardsArray" ng-selected="boardArray==selectedOption" value="{{boardArray.id}}">{{boardArray.boardTitle}}</option> 
+					</select>
+						<button ng-show="!boardsArray.length" class="waves-effect waves-light btn col s8" ng-click="newBoard()">Create New Board<i class="small material-icons">content-save</i></button>
+						<button ng-show="boardsArray.length" class="waves-effect waves-light btn col s8" ng-click="savePin(selectedOption, searchImage); removeSearchImage(searchImage)">Save Pin<i class="small material-icons">content-save</i></button> -->
+				</div>
+    		</div>
+	    </div>
+	</div>
 </div>
