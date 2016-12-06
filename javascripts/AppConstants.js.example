@@ -1,0 +1,14 @@
+"use strict";
+
+app.constant("FIREBASE_CONFIG", {
+	apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    storageBucket: "",
+    messagingSenderId: ""
+});
+
+app.constant("NUTRITIONIXAPIKEY", {
+	appId: "",
+	appKey:""
+});

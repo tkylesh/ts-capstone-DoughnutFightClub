@@ -1,11 +1,10 @@
 <div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for ..." ng-model="searchNutrix">
-            <span class="input-group-btn">
-                <button class="btn btn-default fa fa-search" ng-click="NutrixSearch()" id="searchBtn"></button>
-            </span>
+    <div class="col s10 offset-s2">
+        <div class="input-field col s6 offset-s1">
+            <input type="search" class="form-control" ng-model="searchNutrix" ng-keyup="$event.keyCode === 13 && NutrixSearch()">
+            <label>Search for Ingredients</label>
         </div>
+            <button type="button" class="waves-effect waves-light btn col s2 offset-s1" ng-click="NutrixSearch()" id="searchBtn"><i class="small material-icons">search</i></button> 
     </div>
 </div>
 <div class="row" id="nutrixReturn">
