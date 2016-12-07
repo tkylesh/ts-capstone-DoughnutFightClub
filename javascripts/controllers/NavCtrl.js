@@ -5,24 +5,16 @@ app.controller("NavCtrl", function($scope, $rootScope){ // NAV CONTROLLER LINE 4
 	
 
 	$scope.navItems = [{
-		name:"Logout",
+		name:"LOGOUT",
 		url: "#/logout"
 	},
 	{
-		name:"Diary",
+		name:"DIARY",
 		url: "#/diary"
 	},
 	{
-		name:"Add Diary",
-		url:"#/adddiary"
-	},
-	{
-		name:"Add Meal",
-		url:"#/addmeal"
-	},
-	{
-		name:"Search Ingredients",
-		url:"#/search"
+		name: `+ FOOD`,
+		url:"#/search",
 	}
 	];
 });

@@ -1,6 +1,7 @@
 {					
 	"meals":{
 		"meal0":{
+			"category":"dinner",
 			"uid":"DQezqbQxTFV9FO2zjTeZ0EIrY8J2",
 			"date":"12/05/2016",
 			"totalCalories":"600",
@@ -11,6 +12,7 @@
 			"ingredients":"steak, potatoes"
 		},
 		"meal1":{
+			"category": "lunch",
 			"uid":"V4fsdnuSTEgRn92983N3Fu26B4R2",
 			"date":"12/06/2016",
 			"totalCalories":"500",
