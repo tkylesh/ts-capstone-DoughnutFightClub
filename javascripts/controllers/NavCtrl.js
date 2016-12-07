@@ -2,7 +2,7 @@
 
 app.controller("NavCtrl", function($scope, $rootScope){ // NAV CONTROLLER LINE 4 holds a array of nav headers 
 
-	
+	$(".button-collapse").sideNav();
 
 	$scope.navItems = [{
 		name:"LOGOUT",
