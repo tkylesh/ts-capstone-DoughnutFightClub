@@ -4,7 +4,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		//Firebase: get all Items
 	var getDiary = function(userId){
 		return $q((resolve, reject)=>{
-			$http.get(`${FIREBASE_CONFIG.databaseURL}/logs.json?orderBy="uid"&equalTo="${userId}"`)
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/meals.json?orderBy="uid"&equalTo="${userId}"`)
 			 .success( (response)=>{
 			 	let diaries=[];
 			 	Object.keys(response).forEach((key)=>{
@@ -22,8 +22,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 	//Firebase: send a new item to Firebase
 	var postNewDiary = function(newDiary){
 		return $q((resolve, reject)=>{
-			$http.post(`${FIREBASE_CONFIG.databaseURL}/logs.json`, JSON.stringify({
-				title: newDiary.title,
+			$http.post(`${FIREBASE_CONFIG.databaseURL}/meals.json`, JSON.stringify({
 				uid: newDiary.uid,
 				})
 			)
