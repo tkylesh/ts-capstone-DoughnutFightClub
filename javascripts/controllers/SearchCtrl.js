@@ -20,8 +20,12 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				let location = childSnapshot.ref;
 				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
 			}
+			if (childSnapshot.child('uid').val() === $rootScope.user.uid){
+				let location = childSnapshot.ref;
+				console.log('diary at '+location+'is one of your meal logs.'
+			}
+			console.log('childSnapshot', childSnapshot.key);
 			childSnapshot.forEach(function(childofchildSnapshot){
-				console.log('childSnapshot', childSnapshot.key);
 				console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
 
 			});
