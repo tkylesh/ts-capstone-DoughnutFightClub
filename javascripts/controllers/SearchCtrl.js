@@ -56,6 +56,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.addNewDiary = function(){
 		$scope.newDiary.uid = $rootScope.user.uid;
 		$scope.newDiary.date = getDate();
+
+		console.log('new meal: ', $scope.newDiary);
 		DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
 			$location.url("/diary");
 			$scope.newDiary = {};
