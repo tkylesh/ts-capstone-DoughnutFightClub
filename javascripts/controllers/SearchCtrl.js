@@ -17,7 +17,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		if(mm<10){
 			mm='0'+mm;
 		}
-		date = dd+'/'+mm+'/'+yyyy;
+		date = mm+'/'+dd+'/'+yyyy;
 		return date;
 	};
 
