@@ -33,6 +33,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	    $scope.activeMenu = menuItem;
 	    $scope.newDiary.category = $scope.activeMenu;
 	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
+	    console.log('$scope.newDiary.date', getDate());
 	    $('#modal1').modal('close');
 	};
 
