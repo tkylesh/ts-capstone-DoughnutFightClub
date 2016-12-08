@@ -20,9 +20,11 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				let location = childSnapshot.ref;
 				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
 			}
-			// childSnapshot.forEach(function(childofchildSnapshot){
+			childSnapshot.forEach(function(childofchildSnapshot){
+				console.log('childSnapshot', childSnapshot.key);
+				console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
 
-			// });
+			});
 		});
 	});
 
