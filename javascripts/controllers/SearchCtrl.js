@@ -6,32 +6,43 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.newDiary = {};
 	$scope.tempDiary = {};
 	$scope.tempTitleArray = [];
+	$scope.existingDiaries = [];
 
 
 
+	//---!!!messing around with firebase methods!!!---//
+	//checks firebase for existing diaries
+	// let ref = firebase.database().ref(`/meals`);
 
-	//checks firebase for existing ingredients list
-	let ref = firebase.database().ref(`/meals`);
+	// ref.on("value", function(snapshot) {
+	// 	console.log('snapshot: ', snapshot.exportVal());
+	// 	snapshot.forEach(function(childSnapshot) {
+	// 		if (childSnapshot.child('uid').val() === $rootScope.user.uid){
 
-	ref.on("value", function(snapshot) {
-		console.log('snapshot: ', snapshot.exportVal());
-		snapshot.forEach(function(childSnapshot) {
-			if (childSnapshot.hasChild('ingredients')){
-				let location = childSnapshot.ref;
-				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
-			}
-			if (childSnapshot.child('uid').val() === $rootScope.user.uid){
-				let location = childSnapshot.ref;
-				console.log('diary at '+location+'is one of your meal logs.'
-			}
-			console.log('childSnapshot', childSnapshot.key);
-			childSnapshot.forEach(function(childofchildSnapshot){
-				console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
+	// 			let location = childSnapshot.ref;
+	// 			console.log('diary at '+location+' is one of your meal logs.');
 
-			});
-		});
+	// 			if (childSnapshot.hasChild('ingredients')){
+	// 				let location = childSnapshot.ref;
+	// 				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
+	// 			}
+
+	// 			console.log('childSnapshot', childSnapshot.key);
+	// 			childSnapshot.forEach(function(childofchildSnapshot){
+	// 			console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
+	// 			});
+	// 		}
+			
+	// 	});
+	// });
+	//---!!!messing around with firebase methods!!!---//
+
+
+	//getMeals
+	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+		$scope.existingDiaries = FbDiaries;
+		console.log('existing diaries: ', $scope.existingDiaries);
 	});
-
 
 
 
