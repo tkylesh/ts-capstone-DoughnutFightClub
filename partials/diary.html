@@ -27,8 +27,8 @@
 
 <div class="divider"></div>
 
-<div class="section">
-	<div ng-repeat="diary in diaries">	
+<div ng-repeat="diary in diaries | orderBy:'date' ">
+	<div class="section">
 		<div class="row">
 			<h5 class="center-align">{{diary.category}}</h5>
 		</div>
@@ -45,4 +45,6 @@
 			</ul>
 		</div>
 	</div>
+<div class="divider"></div>
 </div>
+
