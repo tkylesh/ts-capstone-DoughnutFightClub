@@ -42,6 +42,14 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		return $q((resolve, reject)=>{
 			$http.post(`${FIREBASE_CONFIG.databaseURL}/meals.json`, JSON.stringify({
 				uid: newDiary.uid,
+				date: newDiary.date,
+				category: newDiary.category,
+				ingredients: newDiary.ingredients,
+				totalCalories: newDiary.totalCalories,
+				totalFat: newDiary.totalFat,
+				totalProtein: newDiary.totalProtein,
+				totalSodium: newDiary.totalSodium,
+				totalSugars: newDiary.totalSugars
 				})
 			)
 			 .success( (postResponse)=>{

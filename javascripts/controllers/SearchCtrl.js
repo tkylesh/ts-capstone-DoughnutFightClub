@@ -94,18 +94,28 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 
 
-	$scope.addNewDiary = function(){
-		console.log('tempdiary cals', $scope.tempDiary.calories);
-		$scope.tempTitleArray.push($scope.tempDiary.title);
+	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
+		$scope.tempDiary.ingredient = ingredient;
+		$scope.tempDiary.calories = calories;
+		$scope.tempDiary.fat = fat;
+		$scope.tempDiary.protein = protein;
+		$scope.tempDiary.sodium = sodium;
+		$scope.tempDiary.sugars = sugars;
+		addNewDiary($scope.tempDiary);
+	};
+
+
+	let addNewDiary = function(tempDiary){
+		console.log('tempdiary cals', tempDiary.calories);
 
 		$scope.newDiary.uid = $rootScope.user.uid;
 		$scope.newDiary.date = getDate();
-		$scope.newDiary.totalCalories = $scope.tempDiary.calories;
-		$scope.newDiary.totalFat = $scope.tempDiary.fat;
-		$scope.newDiary.totalProtein = $scope.tempDiary.protein;
-		$scope.newDiary.totalSugars = $scope.tempDiary.sugars;
-		$scope.newDiary.totalSodium = $scope.tempDiary.sodium;
-		$scope.newDiary.ingredients = $scope.tempTitleArray.join();
+		$scope.newDiary.totalCalories = tempDiary.calories;
+		$scope.newDiary.totalFat = tempDiary.fat;
+		$scope.newDiary.totalProtein = tempDiary.protein;
+		$scope.newDiary.totalSugars = tempDiary.sugars;
+		$scope.newDiary.totalSodium = tempDiary.sodium;
+		$scope.newDiary.ingredients = tempDiary.ingredient;
 
 		console.log('new meal to post: ', $scope.newDiary);
 
