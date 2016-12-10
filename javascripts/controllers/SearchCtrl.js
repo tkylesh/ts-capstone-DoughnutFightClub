@@ -6,32 +6,43 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.newDiary = {};
 	$scope.tempDiary = {};
 	$scope.tempTitleArray = [];
+	$scope.existingDiaries = [];
 
 
 
+	//---!!!messing around with firebase methods!!!---//
+	//checks firebase for existing diaries
+	// let ref = firebase.database().ref(`/meals`);
 
-	//checks firebase for existing ingredients list
-	let ref = firebase.database().ref(`/meals`);
+	// ref.on("value", function(snapshot) {
+	// 	console.log('snapshot: ', snapshot.exportVal());
+	// 	snapshot.forEach(function(childSnapshot) {
+	// 		if (childSnapshot.child('uid').val() === $rootScope.user.uid){
 
-	ref.on("value", function(snapshot) {
-		console.log('snapshot: ', snapshot.exportVal());
-		snapshot.forEach(function(childSnapshot) {
-			if (childSnapshot.hasChild('ingredients')){
-				let location = childSnapshot.ref;
-				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
-			}
-			if (childSnapshot.child('uid').val() === $rootScope.user.uid){
-				let location = childSnapshot.ref;
-				console.log('diary at '+location+'is one of your meal logs.'
-			}
-			console.log('childSnapshot', childSnapshot.key);
-			childSnapshot.forEach(function(childofchildSnapshot){
-				console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
+	// 			let location = childSnapshot.ref;
+	// 			console.log('diary at '+location+' is one of your meal logs.');
 
-			});
-		});
+	// 			if (childSnapshot.hasChild('ingredients')){
+	// 				let location = childSnapshot.ref;
+	// 				console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
+	// 			}
+
+	// 			console.log('childSnapshot', childSnapshot.key);
+	// 			childSnapshot.forEach(function(childofchildSnapshot){
+	// 			console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
+	// 			});
+	// 		}
+			
+	// 	});
+	// });
+	//---!!!messing around with firebase methods!!!---//
+
+
+	//getMeals
+	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+		$scope.existingDiaries = FbDiaries;
+		console.log('existing diaries: ', $scope.existingDiaries);
 	});
-
 
 
 
@@ -83,18 +94,28 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 
 
-	$scope.addNewDiary = function(){
-		console.log('tempdiary cals', $scope.tempDiary.calories);
-		$scope.tempTitleArray.push($scope.tempDiary.title);
+	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
+		$scope.tempDiary.ingredient = ingredient;
+		$scope.tempDiary.calories = calories;
+		$scope.tempDiary.fat = fat;
+		$scope.tempDiary.protein = protein;
+		$scope.tempDiary.sodium = sodium;
+		$scope.tempDiary.sugars = sugars;
+		addNewDiary($scope.tempDiary);
+	};
+
+
+	let addNewDiary = function(tempDiary){
+		console.log('tempdiary cals', tempDiary.calories);
 
 		$scope.newDiary.uid = $rootScope.user.uid;
 		$scope.newDiary.date = getDate();
-		$scope.newDiary.totalCalories = $scope.tempDiary.calories;
-		$scope.newDiary.totalFat = $scope.tempDiary.fat;
-		$scope.newDiary.totalProtein = $scope.tempDiary.protein;
-		$scope.newDiary.totalSugars = $scope.tempDiary.sugars;
-		$scope.newDiary.totalSodium = $scope.tempDiary.sodium;
-		$scope.newDiary.ingredients = $scope.tempTitleArray.join();
+		$scope.newDiary.totalCalories = tempDiary.calories;
+		$scope.newDiary.totalFat = tempDiary.fat;
+		$scope.newDiary.totalProtein = tempDiary.protein;
+		$scope.newDiary.totalSugars = tempDiary.sugars;
+		$scope.newDiary.totalSodium = tempDiary.sodium;
+		$scope.newDiary.ingredients = tempDiary.ingredient;
 
 		console.log('new meal to post: ', $scope.newDiary);
 

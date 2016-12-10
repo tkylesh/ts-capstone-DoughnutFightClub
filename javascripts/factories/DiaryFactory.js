@@ -19,11 +19,37 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		});
 	};
 
+	//this query doesn't work. ask someone about it.
+	// var getDiaryByDate = function(userId, date){
+	// 	return $q((resolve, reject)=>{
+	// 		$http.get(`${FIREBASE_CONFIG.databaseURL}/meals.json?orderBy="uid"&equalTo="${userId}&"date"="${date}"`)
+	// 		.success( (response)=>{
+	// 		 	let diaries=[];
+	// 		 	Object.keys(response).forEach((key)=>{
+	// 		 		response[key].id = key;
+	// 		 		diaries.push(response[key]);
+	// 		 	});
+	// 		 	resolve(diaries);
+	// 		 })
+	// 		 .error( (errorResponse)=>{
+	// 		 	reject(errorResponse);
+	// 		 });
+	// 	});
+	// };
+
 	//Firebase: send a new item to Firebase
 	var postNewDiary = function(newDiary){
 		return $q((resolve, reject)=>{
 			$http.post(`${FIREBASE_CONFIG.databaseURL}/meals.json`, JSON.stringify({
 				uid: newDiary.uid,
+				date: newDiary.date,
+				category: newDiary.category,
+				ingredients: newDiary.ingredients,
+				totalCalories: newDiary.totalCalories,
+				totalFat: newDiary.totalFat,
+				totalProtein: newDiary.totalProtein,
+				totalSodium: newDiary.totalSodium,
+				totalSugars: newDiary.totalSugars
 				})
 			)
 			 .success( (postResponse)=>{
