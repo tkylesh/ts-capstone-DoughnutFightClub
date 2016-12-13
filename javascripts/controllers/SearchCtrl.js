@@ -72,11 +72,37 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.menuItems = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACKS'];
 	$scope.activeMenu = $scope.menuItems[0];
 
+	let getMatchingMealId = () => {
+		//checks firebase for existing diaries
+		let ref = firebase.database().ref(`/meals`);
+
+		ref.on("value", function(snapshot) {
+			console.log('snapshot: ', snapshot.exportVal());
+			snapshot.forEach(function(childSnapshot) {
+				console.log('childSnapshot', childSnapshot.exportVal());
+				console.log('childSnapshot.uid', childSnapshot.child('uid').val());
+				console.log('user id rootScope', $rootScope.user.uid);
+				console.log('childSnapshot.date', childSnapshot.child('date').val());
+				console.log('newDiary date', $scope.newDiary.date);
+				console.log('childSnapshot.category', childSnapshot.child('category').val());
+				console.log('newDiary category', $scope.newDiary.category);
+				if (childSnapshot.child('uid').val() === $rootScope.user.uid){
+					if(childSnapshot.child('date').val()=== $scope.newDiary.date){
+						if(childSnapshot.child('category').val() === $scope.newDiary.category){
+						$scope.SingleMealId = childSnapshot.child('id').val();
+						}
+					}
+				}
+			});
+		});
+	};
+
 	$scope.setActive = function(menuItem) {
 	    $scope.activeMenu = menuItem;
 	    $scope.newDiary.category = $scope.activeMenu;
 	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
 	    console.log('$scope.newDiary.date', getDate());
+	    getMatchingMealId();
 	    $('#modal1').modal('close');
 	};
 
@@ -96,22 +122,9 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		});
 	};
 
-	let getMatchingMealId = () => {
-		//checks firebase for existing diaries
-		let ref = firebase.database().ref(`/meals`);
+	
 
-		ref.on("value", function(snapshot) {
-			console.log('snapshot: ', snapshot.exportVal());
-			snapshot.forEach(function(childSnapshot) {
-				if (childSnapshot.child('uid').val() === $rootScope.user.uid && childSnapshot.child('date').val()=== $scope.newDiary.date && childSnapshot.child('category').val() === $scope.newDiary.category){	
-					return childSnapshot.child('id').val();
-				}
-			});
-		});
-	};
-
-	let SingleMealId = getMatchingMealId();
-	console.log('SingleMealId', SingleMealId);
+	console.log('SingleMealId', $scope.SingleMealId);
 
 
 	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
@@ -127,7 +140,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.date = getDate();
 		console.log('things i need for to test', $scope.newDiary.uid, $scope.newDiary.date, $scope.newDiary.category);
 
-		DiaryFactory.getSingleDiary(SingleMealId).then(function(FbDiary) {
+		DiaryFactory.getSingleDiary($scope.SingleMealId).then(function(FbDiary) {
 		console.log('single diary: ', FbDiary);
 
 		let diary = FbDiary;
