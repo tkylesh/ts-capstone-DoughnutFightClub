@@ -134,9 +134,9 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.tempDiary.sugars = sugars;
 		$scope.newDiary.uid = $rootScope.user.uid;
 
+
 		//checks firebase for existing diaries
 		// let ref = firebase.database().ref(`/meals`);
-
 		console.log('existing diaries', $scope.existingDiaries);
 		
 		$scope.existingDiaries.forEach(function(diary){
@@ -152,28 +152,13 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				}
 			}
 		});
-		// ref.on("value", function(snapshot) {
-		// 	console.log('snapshot: ', snapshot.exportVal());
-		// 	snapshot.forEach(function(childSnapshot) {
-		// 		// console.log('childSnapshot', childSnapshot.exportVal());
-		// 		// console.log('childSnapshot.uid', childSnapshot.child('uid').val());
-		// 		// console.log('user id rootScope', $rootScope.user.uid);
-		// 		// console.log('childSnapshot.date', childSnapshot.child('date').val());
-		// 		// console.log('newDiary date', $scope.newDiary.date);
-		// 		// console.log('childSnapshot.category', childSnapshot.child('category').val());
-		// 		// console.log('newDiary category', $scope.newDiary.category);
-		// 		if (childSnapshot.child('uid').val() === $rootScope.user.uid && childSnapshot.child('date').val()=== $scope.newDiary.date && childSnapshot.child('category').val() === $scope.newDiary.category){
-		// 			console.log('childSnapshot.key', childSnapshot.key);
-		// 			$scope.mealId = childSnapshot.key;
-		// 		}
-		// 	});
 
 			console.log('mealId', $scope.mealId);
-
 
 			if ($scope.mealId !== undefined){
 				console.log('mealId', $scope.mealId);
 				DiaryFactory.getSingleDiary($scope.mealId).then(function(FbDiary) {
+
 					console.log('single diary: ', FbDiary);
 
 					let diary = FbDiary;
