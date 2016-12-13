@@ -79,13 +79,13 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		ref.on("value", function(snapshot) {
 			console.log('snapshot: ', snapshot.exportVal());
 			snapshot.forEach(function(childSnapshot) {
-				console.log('childSnapshot', childSnapshot.exportVal());
-				console.log('childSnapshot.uid', childSnapshot.child('uid').val());
-				console.log('user id rootScope', $rootScope.user.uid);
-				console.log('childSnapshot.date', childSnapshot.child('date').val());
-				console.log('newDiary date', $scope.newDiary.date);
-				console.log('childSnapshot.category', childSnapshot.child('category').val());
-				console.log('newDiary category', $scope.newDiary.category);
+				// console.log('childSnapshot', childSnapshot.exportVal());
+				// console.log('childSnapshot.uid', childSnapshot.child('uid').val());
+				// console.log('user id rootScope', $rootScope.user.uid);
+				// console.log('childSnapshot.date', childSnapshot.child('date').val());
+				// console.log('newDiary date', $scope.newDiary.date);
+				// console.log('childSnapshot.category', childSnapshot.child('category').val());
+				// console.log('newDiary category', $scope.newDiary.category);
 				if (childSnapshot.child('uid').val() === $rootScope.user.uid){
 					if(childSnapshot.child('date').val()=== $scope.newDiary.date){
 						if(childSnapshot.child('category').val() === $scope.newDiary.category){
