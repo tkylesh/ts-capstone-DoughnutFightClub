@@ -100,6 +100,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.setActive = function(menuItem) {
 	    $scope.activeMenu = menuItem;
 	    $scope.newDiary.category = $scope.activeMenu;
+	    $scope.newDiary.date = getDate();
 	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
 	    console.log('$scope.newDiary.date', getDate());
 	    getMatchingMealId();
@@ -137,7 +138,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 
 		$scope.newDiary.uid = $rootScope.user.uid;
-		$scope.newDiary.date = getDate();
+		
 		console.log('things i need for to test', $scope.newDiary.uid, $scope.newDiary.date, $scope.newDiary.category);
 
 		DiaryFactory.getSingleDiary($scope.SingleMealId).then(function(FbDiary) {
