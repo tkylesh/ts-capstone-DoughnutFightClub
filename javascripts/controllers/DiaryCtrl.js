@@ -4,8 +4,12 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.diaries = [];
 	$scope.logs = [];
 	$scope.selectedDiary = '';
-	$scope.selectedDiary = 'Diary0';
-
+	// $scope.selectedDiary = 'Diary0';
+	$scope.totalCalories = 0;
+	$scope.totalFat = 0;
+	$scope.totalProtein = 0;
+	$scope.totalSodium = 0;
+	$scope.totalSugars = 0;
 	
 	//get the current date to add to newDiary object
 	let getDate = () => {
@@ -26,6 +30,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.today = getDate();
 
 	//getMeals
+	//lists all meals on the diary page
 	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 		$scope.diaries = FbDiaries;
 		console.log('diaries: ', $scope.diaries);
@@ -35,8 +40,17 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 		$scope.diaries = FbDiaries;
 		$scope.diaryByDate = $scope.diaries.filter(function(object){
-			return object.date === "12/05/2016";
+			return object.date === $scope.today;
 		});
-		console.log($scope.diaryByDate);
+		console.log('diaryByDate', $scope.diaryByDate);
+
+		//accumulate totals for each stat
+		$scope.diaryByDate.forEach(function(diary){
+			$scope.totalCalories += diary.totalCalories;
+			$scope.totalFat += diary.totalFat;
+			$scope.totalProtein += diary.totalProtein;
+			$scope.totalSodium += diary.totalSodium;
+			$scope.totalSugars += diary.totalSugars;
+		});
 	});
 });
