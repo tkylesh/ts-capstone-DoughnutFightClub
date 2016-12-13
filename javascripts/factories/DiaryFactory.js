@@ -31,23 +31,29 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 	    });
   	};
 
-	//this query doesn't work. ask someone about it.
-	// var getDiaryByDate = function(userId, date){
-	// 	return $q((resolve, reject)=>{
-	// 		$http.get(`${FIREBASE_CONFIG.databaseURL}/meals.json?orderBy="uid"&equalTo="${userId}&"date"="${date}"`)
-	// 		.success( (response)=>{
-	// 		 	let diaries=[];
-	// 		 	Object.keys(response).forEach((key)=>{
-	// 		 		response[key].id = key;
-	// 		 		diaries.push(response[key]);
-	// 		 	});
-	// 		 	resolve(diaries);
-	// 		 })
-	// 		 .error( (errorResponse)=>{
-	// 		 	reject(errorResponse);
-	// 		 });
-	// 	});
-	// };
+	var editDiary = function(editDiary){
+    return $q((resolve, reject) =>{
+      $http.put(`${FIREBASE_CONFIG.databaseURL}/items/${editDiary.id}.json`,
+         JSON.stringify({
+           	uid: editDiary.uid,
+			date: editDiary.date,
+			category: editDiary.category,
+			ingredients: editDiary.ingredients,
+			totalCalories: editDiary.totalCalories,
+			totalFat: editDiary.totalFat,
+			totalProtein: editDiary.totalProtein,
+			totalSodium: editDiary.totalSodium,
+			totalSugars: editDiary.totalSugars
+         })
+       )
+        .success(function(editResponse){
+          resolve(editResponse);
+        })
+        .error(function(editError){
+          reject(editError);
+        });
+    });
+  };
 
 	//Firebase: send a new item to Firebase
 	var postNewDiary = function(newDiary){
@@ -76,7 +82,8 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 	return {
 		getDiary:getDiary,
 		postNewDiary:postNewDiary,
-		getSingleDiary:getSingleDiary
+		getSingleDiary:getSingleDiary,
+		editDiary:editDiary
 	};
 });
 
