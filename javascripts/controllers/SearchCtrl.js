@@ -135,7 +135,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.uid = $rootScope.user.uid;
 
 		//checks firebase for existing diaries
-		let ref = firebase.database().ref(`/meals`);
+		// let ref = firebase.database().ref(`/meals`);
 
 		console.log('existing diaries', $scope.existingDiaries);
 		
