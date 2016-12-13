@@ -23,6 +23,20 @@
 			"ingredients":"chicken, broccoli"
 		}
 	},
+	"foods":{
+		"food01":{
+			"mealId":"meal0",
+			"title":"steak",
+			"uid":"DQezqbQxTFV9FO2zjTeZ0EIrY8J2",
+			"date":"12/05/2016",
+			"calories":"250",
+			"fat":"15",
+			"protein":"30",
+			"sodium":"150",
+			"sugars":"2"
+		}
+
+	},
 	"users":{
 		"user0":{
 			"uid": "V4fsdnuSTEgRn92983N3Fu26B4R2",
