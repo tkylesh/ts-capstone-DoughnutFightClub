@@ -125,87 +125,87 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	
 
 
-	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
-		$scope.tempDiary.ingredient = ingredient;
-		$scope.tempDiary.calories = calories;
-		$scope.tempDiary.fat = fat;
-		$scope.tempDiary.protein = protein;
-		$scope.tempDiary.sodium = sodium;
-		$scope.tempDiary.sugars = sugars;
-		$scope.newDiary.uid = $rootScope.user.uid;
+	// $scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
+	// 	$scope.tempDiary.ingredient = ingredient;
+	// 	$scope.tempDiary.calories = calories;
+	// 	$scope.tempDiary.fat = fat;
+	// 	$scope.tempDiary.protein = protein;
+	// 	$scope.tempDiary.sodium = sodium;
+	// 	$scope.tempDiary.sugars = sugars;
+	// 	$scope.newDiary.uid = $rootScope.user.uid;
 
 
-		//checks firebase for existing diaries
-		// let ref = firebase.database().ref(`/meals`);
-		console.log('existing diaries', $scope.existingDiaries);
+	// 	//checks firebase for existing diaries
+	// 	// let ref = firebase.database().ref(`/meals`);
+	// 	console.log('existing diaries', $scope.existingDiaries);
 		
-		$scope.existingDiaries.forEach(function(diary){
-			console.log("existing diary uid", diary.uid);
-			if(diary.uid === $rootScope.user.uid){
-				console.log("existing diary date", diary.date);
-				if(diary.date === $scope.newDiary.date){
-					console.log("existing diary category", diary.category);
-					if(diary.category === $scope.newDiary.category){
-						console.log("meal id", diary.id);
-						$scope.mealId = diary.id;
-					}
-				}
-			}
-		});
+	// 	$scope.existingDiaries.forEach(function(diary){
+	// 		console.log("existing diary uid", diary.uid);
+	// 		if(diary.uid === $rootScope.user.uid){
+	// 			console.log("existing diary date", diary.date);
+	// 			if(diary.date === $scope.newDiary.date){
+	// 				console.log("existing diary category", diary.category);
+	// 				if(diary.category === $scope.newDiary.category){
+	// 					console.log("meal id", diary.id);
+	// 					$scope.mealId = diary.id;
+	// 				}
+	// 			}
+	// 		}
+	// 	});
 
-			console.log('mealId', $scope.mealId);
+	// 		console.log('mealId', $scope.mealId);
 
-			if ($scope.mealId !== undefined){
-				console.log('mealId', $scope.mealId);
-				DiaryFactory.getSingleDiary($scope.mealId).then(function(FbDiary) {
+	// 		if ($scope.mealId !== undefined){
+	// 			console.log('mealId', $scope.mealId);
+	// 			DiaryFactory.getSingleDiary($scope.mealId).then(function(FbDiary) {
 
-					console.log('single diary: ', FbDiary);
+	// 				console.log('single diary: ', FbDiary);
 
-					let diary = FbDiary;
+	// 				let diary = FbDiary;
 
-					diary.id = $scope.mealId;
+	// 				diary.id = $scope.mealId;
 
-					console.log('ingredients', diary.ingredients);
+	// 				console.log('ingredients', diary.ingredients);
 
-					let ingredientsArray = diary.ingredients.split('/');
+	// 				let ingredientsArray = diary.ingredients.split('/');
 
-					console.log('ingredientsArray', ingredientsArray);	
+	// 				console.log('ingredientsArray', ingredientsArray);	
 
-					ingredientsArray.push(` ${$scope.tempDiary.ingredient} /`);
+	// 				ingredientsArray.push(` ${$scope.tempDiary.ingredient} /`);
 
-					console.log('new ingredientsArray', ingredientsArray);
+	// 				console.log('new ingredientsArray', ingredientsArray);
 
-					diary.ingredients = ingredientsArray.join('/');
+	// 				diary.ingredients = ingredientsArray.join('/');
 
-					console.log('diary.ingredients', diary.ingredients);
+	// 				console.log('diary.ingredients', diary.ingredients);
 
-					diary.totalCalories += $scope.tempDiary.calories;
+	// 				diary.totalCalories += $scope.tempDiary.calories;
 
-					diary.totalFat += $scope.tempDiary.fat;
+	// 				diary.totalFat += $scope.tempDiary.fat;
 
-					diary.totalProtein += $scope.tempDiary.protein;
+	// 				diary.totalProtein += $scope.tempDiary.protein;
 
-					diary.totalSodium += $scope.tempDiary.sodium;
+	// 				diary.totalSodium += $scope.tempDiary.sodium;
 
-					diary.totalSugars += $scope.tempDiary.sugars;
+	// 				diary.totalSugars += $scope.tempDiary.sugars;
 
-					return diary;
+	// 				return diary;
 
-				}).then(function(diary){
+	// 			}).then(function(diary){
 
-					console.log('diary object to add: ', diary);
+	// 				console.log('diary object to add: ', diary);
 
-					DiaryFactory.editDiary(diary).then(function(response){
-						$location.url("/diary");
-						$scope.newDiary = {};
-					});
+	// 				DiaryFactory.editDiary(diary).then(function(response){
+	// 					$location.url("/diary");
+	// 					$scope.newDiary = {};
+	// 				});
 
-				});
-			}else{
-				addNewDiary($scope.tempDiary);
-			}
-		// });
-	};
+	// 			});
+	// 		}else{
+	// 			addNewDiary($scope.tempDiary);
+	// 		}
+	// 	// });
+	// };
 
 	
 
