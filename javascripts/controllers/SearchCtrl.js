@@ -134,14 +134,14 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	
 
 
-	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
-		// $scope.tempDiary.ingredient = ingredient;
-		// $scope.tempDiary.calories = calories;
-		// $scope.tempDiary.fat = fat;
-		// $scope.tempDiary.protein = protein;
-		// $scope.tempDiary.sodium = sodium;
-		// $scope.tempDiary.sugars = sugars;
-		// $scope.newDiary.uid = $rootScope.user.uid;
+	$scope.constructFoods = (ingredient, calories, fat, protein, sodium, sugars)=>{
+		$scope.tempFood.ingredient = ingredient;
+		$scope.tempFood.calories = calories;
+		$scope.tempFood.fat = fat;
+		$scope.tempFood.protein = protein;
+		$scope.tempFood.sodium = sodium;
+		$scope.tempFood.sugars = sugars;
+		$scope.newDiary.uid = $rootScope.user.uid;
 	};
 
 
@@ -219,14 +219,15 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 	
 
-	// $scope.addNewDiary = function(tempDiary){
-		// $scope.newDiary.totalCalories = tempDiary.calories;
-		// $scope.newDiary.totalFat = tempDiary.fat;
-		// $scope.newDiary.totalProtein = tempDiary.protein;
-		// $scope.newDiary.totalSugars = tempDiary.sugars;
-		// $scope.newDiary.totalSodium = tempDiary.sodium;
-		// $scope.newDiary.ingredients = `${tempDiary.ingredient} /`;
-	// };
+	$scope.addNewFood= function(tempFood){
+
+		$scope.newDiary.calories = tempFood.calories;
+		$scope.newDiary.fat = tempFood.fat;
+		$scope.newDiary.protein = tempFood.protein;
+		$scope.newDiary.sugars = tempFood.sugars;
+		$scope.newDiary.sodium = tempFood.sodium;
+		$scope.newDiary.title = tempFood.ingredient;
+	};
 });
 
 
