@@ -19,6 +19,18 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 		});
 	};
 
+	var getSingleDiary = function(diaryId){
+	    return $q((resolve, reject) => {
+	      $http.get(`${FIREBASE_CONFIG.databaseURL}/meals/${diaryId}.json`)
+	      .success(function(getSingleResponse){
+	        resolve(getSingleResponse);
+	      })
+	      .error(function(getSingleError){
+	        reject(getSingleError);
+	      });
+	    });
+  	};
+
 	//this query doesn't work. ask someone about it.
 	// var getDiaryByDate = function(userId, date){
 	// 	return $q((resolve, reject)=>{
@@ -63,7 +75,8 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 
 	return {
 		getDiary:getDiary,
-		postNewDiary:postNewDiary
+		postNewDiary:postNewDiary,
+		getSingleDiary:getSingleDiary
 	};
 });
 

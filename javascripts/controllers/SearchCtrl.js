@@ -96,6 +96,22 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		});
 	};
 
+	let getMatchingMealId = () => {
+		//checks firebase for existing diaries
+		let ref = firebase.database().ref(`/meals`);
+
+		ref.on("value", function(snapshot) {
+			console.log('snapshot: ', snapshot.exportVal());
+			snapshot.forEach(function(childSnapshot) {
+				if (childSnapshot.child('uid').val() === $rootScope.user.uid && childSnapshot.child('date').val()=== $scope.newDiary.date && childSnapshot.child('category').val() === $scope.newDiary.category){	
+					return childSnapshot.child('id').val();
+				}
+			});
+		});
+	};
+
+	let SingleMealId = getMatchingMealId();
+	console.log('SingleMealId', SingleMealId);
 
 
 	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
@@ -111,60 +127,30 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.date = getDate();
 		console.log('things i need for to test', $scope.newDiary.uid, $scope.newDiary.date, $scope.newDiary.category);
 
-		//checks firebase for existing diaries
-		let ref = firebase.database().ref(`/meals`);
+		DiaryFactory.getSingleDiary(SingleMealId).then(function(FbDiary) {
+		console.log('single diary: ', FbDiary);
 
-		ref.on("value", function(snapshot) {
-			console.log('snapshot: ', snapshot.exportVal());
-			snapshot.forEach(function(childSnapshot) {
-				if (childSnapshot.child('uid').val() === $rootScope.user.uid){
+		let diary = FbDiary;
 
-					let location = childSnapshot.ref;
-					console.log('diary at '+location+' is one of your meal logs.');
-
-					if (childSnapshot.child('date').val()=== $scope.newDiary.date){
-						let location = childSnapshot.ref;
-						console.log('diary at '+location+' has date of ("'+childSnapshot.child('date').val()+'").');
-						if (childSnapshot.child('category').val() === $scope.newDiary.category){
-							DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-								$scope.diaries = FbDiaries;
-								console.log('diaries: ', $scope.diaries);
-								let diary = $scope.diaries.filter(function(object){
-								return object.uid === $rootScope.user.uid && object.date === $scope.newDiary.date && object.category === $scope.newDiary.category;
-								});
-								console.log('diary', diary);
-								let ingredientsArray = diary.ingredients.split("");
-								console.log('ingredientsArray', ingredientsArray);	
-								ingredientsArray.push($scope.tempDiary.ingredient);
-								console.log('new ingredientsArray', ingredientsArray);
-								diary.ingredients = ingredientsArray.join(', ');
-								console.log('diary.ingredients', diary.ingredients);
-								diary.totalCalories += $scope.tempDiary.calories;
-								diary.totalFat += $scope.tempDiary.fat;
-								diary.totalProtein += $scope.tempDiary.protein;
-								diary.totalSodium += $scope.tempDiary.sodium;
-								diary.totalSugars += $scope.tempDiary.sugars;
-								return diary;
-							}).then(function(diary){
-								console.log('diary object to add: ', diary);
-								addNewDiary(diary);
-							});
-						}
-					}
-
-
-					// console.log('childSnapshot', childSnapshot.key);
-					// childSnapshot.forEach(function(childofchildSnapshot){
-					// console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
-					// });
-				}
-				else{
-					addNewDiary($scope.tempDiary);
-				}
-			});
-		});
+		let ingredientsArray = diary.ingredients.split("");
+		console.log('ingredientsArray', ingredientsArray);	
+		ingredientsArray.push($scope.tempDiary.ingredient);
+		console.log('new ingredientsArray', ingredientsArray);
+		diary.ingredients = ingredientsArray.join(', ');
+		console.log('diary.ingredients', diary.ingredients);
+		diary.totalCalories += $scope.tempDiary.calories;
+		diary.totalFat += $scope.tempDiary.fat;
+		diary.totalProtein += $scope.tempDiary.protein;
+		diary.totalSodium += $scope.tempDiary.sodium;
+		diary.totalSugars += $scope.tempDiary.sugars;
+		return diary;
+	}).then(function(diary){
+		console.log('diary object to add: ', diary);
+		addNewDiary(diary);
+	});
 	};
 
+	
 
 	let addNewDiary = function(tempDiary){
 		console.log('tempdiary cals', tempDiary.calories);
@@ -187,3 +173,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		});
 	};
 });
+
+
+
+
