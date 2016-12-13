@@ -178,6 +178,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 					let diary = FbDiary;
 
+					diary.id = $scope.mealId;
+
 					console.log('ingredients', diary.ingredients);
 
 					let ingredientsArray = diary.ingredients.split('/');
@@ -188,7 +190,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 					console.log('new ingredientsArray', ingredientsArray);
 
-					diary.ingredients = ingredientsArray.join(' /');
+					diary.ingredients = ingredientsArray.join('/');
 
 					console.log('diary.ingredients', diary.ingredients);
 
@@ -208,7 +210,10 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 					console.log('diary object to add: ', diary);
 
-					DiaryFactory.editDiary(diary);
+					DiaryFactory.editDiary(diary).then(function(response){
+						$location.url("/diary");
+						$scope.newDiary = {};
+					});
 
 				});
 			}else{

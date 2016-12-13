@@ -35,7 +35,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 		$scope.diaries = FbDiaries;
 		$scope.diaryByDate = $scope.diaries.filter(function(object){
-			return object.date === "12/05/2016";
+			return object.date === $scope.today;
 		});
 		console.log($scope.diaryByDate);
 	});
