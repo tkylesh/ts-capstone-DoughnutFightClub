@@ -101,9 +101,18 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	    $scope.activeMenu = menuItem;
 	    $scope.newDiary.category = $scope.activeMenu;
 	    $scope.newDiary.date = getDate();
+	    $scope.newDiary.uid = $rootScope.user.uid;
 	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
 	    console.log('$scope.newDiary.date', getDate());
+	    console.log('$scope.newDiary.uid', $scope.newDiary.uid);
 	    $('#modal1').modal('close');
+
+		console.log('new meal to post: ', $scope.newDiary);
+
+		DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
+			// $location.url("/diary");
+			$scope.newDiary = {};
+		});
 	};
 
 
@@ -125,20 +134,21 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	
 
 
-	// $scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
-	// 	$scope.tempDiary.ingredient = ingredient;
-	// 	$scope.tempDiary.calories = calories;
-	// 	$scope.tempDiary.fat = fat;
-	// 	$scope.tempDiary.protein = protein;
-	// 	$scope.tempDiary.sodium = sodium;
-	// 	$scope.tempDiary.sugars = sugars;
-	// 	$scope.newDiary.uid = $rootScope.user.uid;
+	$scope.constructDiary = (ingredient, calories, fat, protein, sodium, sugars)=>{
+		// $scope.tempDiary.ingredient = ingredient;
+		// $scope.tempDiary.calories = calories;
+		// $scope.tempDiary.fat = fat;
+		// $scope.tempDiary.protein = protein;
+		// $scope.tempDiary.sodium = sodium;
+		// $scope.tempDiary.sugars = sugars;
+		// $scope.newDiary.uid = $rootScope.user.uid;
+	};
 
 
 	// 	//checks firebase for existing diaries
 	// 	// let ref = firebase.database().ref(`/meals`);
 	// 	console.log('existing diaries', $scope.existingDiaries);
-		
+
 	// 	$scope.existingDiaries.forEach(function(diary){
 	// 		console.log("existing diary uid", diary.uid);
 	// 		if(diary.uid === $rootScope.user.uid){
@@ -209,24 +219,14 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 	
 
-	let addNewDiary = function(tempDiary){
-
-		$scope.newDiary.totalCalories = tempDiary.calories;
-		$scope.newDiary.totalFat = tempDiary.fat;
-		$scope.newDiary.totalProtein = tempDiary.protein;
-		$scope.newDiary.totalSugars = tempDiary.sugars;
-		$scope.newDiary.totalSodium = tempDiary.sodium;
-		$scope.newDiary.ingredients = `${tempDiary.ingredient} /`;
-
-		console.log('new meal to post: ', $scope.newDiary);
-
-
-
-		DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
-			$location.url("/diary");
-			$scope.newDiary = {};
-		});
-	};
+	// $scope.addNewDiary = function(tempDiary){
+		// $scope.newDiary.totalCalories = tempDiary.calories;
+		// $scope.newDiary.totalFat = tempDiary.fat;
+		// $scope.newDiary.totalProtein = tempDiary.protein;
+		// $scope.newDiary.totalSugars = tempDiary.sugars;
+		// $scope.newDiary.totalSodium = tempDiary.sodium;
+		// $scope.newDiary.ingredients = `${tempDiary.ingredient} /`;
+	// };
 });
 
 

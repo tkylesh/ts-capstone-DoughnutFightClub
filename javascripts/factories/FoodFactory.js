@@ -1,7 +1,7 @@
 "use strict";
 
 
-app.factory("PinFactory", function($q, $http, FIREBASE_CONFIG){
+app.factory("FoodFactory", function($q, $http, FIREBASE_CONFIG){
 
 	var getFoodsFB = function(userId){
 		return $q((resolve, reject)=>{

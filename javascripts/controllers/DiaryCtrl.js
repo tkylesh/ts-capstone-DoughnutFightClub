@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory){
+app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory){
 	$scope.diaries = [];
 	$scope.logs = [];
 	$scope.selectedDiary = '';
@@ -44,13 +44,15 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		});
 		console.log('diaryByDate', $scope.diaryByDate);
 
+
+
 		//accumulate totals for each stat
-		$scope.diaryByDate.forEach(function(diary){
-			$scope.totalCalories += diary.totalCalories;
-			$scope.totalFat += diary.totalFat;
-			$scope.totalProtein += diary.totalProtein;
-			$scope.totalSodium += diary.totalSodium;
-			$scope.totalSugars += diary.totalSugars;
-		});
+		// $scope.diaryByDate.forEach(function(diary){
+		// 	$scope.totalCalories += diary.totalCalories;
+		// 	$scope.totalFat += diary.totalFat;
+		// 	$scope.totalProtein += diary.totalProtein;
+		// 	$scope.totalSodium += diary.totalSodium;
+		// 	$scope.totalSugars += diary.totalSugars;
+		// });
 	});
 });
