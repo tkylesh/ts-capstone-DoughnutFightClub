@@ -39,10 +39,10 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 
 	//getMeals
-	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-		$scope.existingDiaries = FbDiaries;
-		console.log('existing diaries: ', $scope.existingDiaries);
-	});
+	// DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+	// 	$scope.existingDiaries = FbDiaries;
+	// 	console.log('existing diaries: ', $scope.existingDiaries);
+	// });
 
 
 
@@ -62,6 +62,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		return date;
 	};
 
+
+
 	//activate the google materialize modal
 	$('.modal').modal();
 	$('#modal1').modal('open');
@@ -78,10 +80,12 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	    $('#modal1').modal('close');
 	};
 
+
+
 	
 
 
-	let uid = $rootScope.user.uid;
+	// let uid = $rootScope.user.uid;
 
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
@@ -101,15 +105,66 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.tempDiary.protein = protein;
 		$scope.tempDiary.sodium = sodium;
 		$scope.tempDiary.sugars = sugars;
-		addNewDiary($scope.tempDiary);
+
+
+		$scope.newDiary.uid = $rootScope.user.uid;
+		$scope.newDiary.date = getDate();
+		console.log('things i need for to test', $scope.newDiary.uid, $scope.newDiary.date, $scope.newDiary.category);
+
+		//checks firebase for existing diaries
+		let ref = firebase.database().ref(`/meals`);
+
+		ref.on("value", function(snapshot) {
+			console.log('snapshot: ', snapshot.exportVal());
+			snapshot.forEach(function(childSnapshot) {
+				if (childSnapshot.child('uid').val() === $rootScope.user.uid){
+
+					let location = childSnapshot.ref;
+					console.log('diary at '+location+' is one of your meal logs.');
+
+					if (childSnapshot.hasChild('ingredients')){
+						let location = childSnapshot.ref;
+						console.log('diary at '+location+' has ingredients list already ("'+childSnapshot.val().ingredients+'").');
+					}
+
+					console.log('childSnapshot', childSnapshot.key);
+					childSnapshot.forEach(function(childofchildSnapshot){
+					console.log('key: ', childofchildSnapshot.key, ' / value: ', childofchildSnapshot.val());
+					});
+				}
+			});
+		});
+		
+		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+			$scope.diaries = FbDiaries;
+			console.log('diaries: ', $scope.diaries);
+			let diary = $scope.diaries.filter(function(object){
+			return object.uid === $rootScope.user.uid && object.date === $scope.newDiary.date && object.category === $scope.newDiary.category;
+			});
+			console.log('diary', diary);
+			let ingredientsArray = diary.ingredients.split();
+			console.log('ingredientsArray', ingredientsArray);	
+			ingredientsArray.push($scope.tempDiary.ingredient);
+			console.log('new ingredientsArray', ingredientsArray);
+			diary.ingredients = ingredientsArray.join(', ');
+			console.log('diary.ingredients', diary.ingredients);
+			diary.totalCalories += $scope.tempDiary.calories;
+			diary.totalFat += $scope.tempDiary.fat;
+			diary.totalProtein += $scope.tempDiary.protein;
+			diary.totalSodium += $scope.tempDiary.sodium;
+			diary.totalSugars += $scope.tempDiary.sugars;
+			return diary;
+		}).then(function(diary){
+			console.log('diary object to add: ', diary);
+			addNewDiary(diary);
+		});
 	};
 
 
 	let addNewDiary = function(tempDiary){
 		console.log('tempdiary cals', tempDiary.calories);
 
-		$scope.newDiary.uid = $rootScope.user.uid;
-		$scope.newDiary.date = getDate();
+		
 		$scope.newDiary.totalCalories = tempDiary.calories;
 		$scope.newDiary.totalFat = tempDiary.fat;
 		$scope.newDiary.totalProtein = tempDiary.protein;
@@ -118,6 +173,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.ingredients = tempDiary.ingredient;
 
 		console.log('new meal to post: ', $scope.newDiary);
+
+
 
 		DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
 			$location.url("/diary");
