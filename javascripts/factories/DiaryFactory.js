@@ -33,7 +33,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 
 	var editDiary = function(editDiary){
     return $q((resolve, reject) =>{
-      $http.put(`${FIREBASE_CONFIG.databaseURL}/items/${editDiary.id}.json`,
+      $http.put(`${FIREBASE_CONFIG.databaseURL}/meals/${editDiary.id}.json`,
          JSON.stringify({
            	uid: editDiary.uid,
 			date: editDiary.date,
