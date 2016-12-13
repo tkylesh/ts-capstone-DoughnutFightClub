@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FIREBASE_CONFIG){
+app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
 	$scope.newDiary = {};
