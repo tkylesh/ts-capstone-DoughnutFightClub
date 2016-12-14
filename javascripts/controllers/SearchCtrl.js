@@ -4,7 +4,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
 	$scope.newDiary = {};
-	$scope.tempDiary = {};
+	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
 
