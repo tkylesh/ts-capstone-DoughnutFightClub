@@ -38,19 +38,21 @@
 		<h5 class="center-align"><b>{{diary.category}}</b></h5> 
 		<h6 class="center-align">{{diary.date}}</h6>
 	</div>
-	<div class="row">
-		<div class="foodContainer" ng-repeat="food in diary.foods">
-		<h6 class="center-align">{{food.title}}</h6>
-	</div>
-	<div class="row center-align">
-		<ul>
-			<li><label><b>Calories: </b><p>{{food.calories}}</p></label></li>
-			<li><label><b>Fat: </b><p>{{food.fat}}</p></label></li>
-			<li><label><b>Protein: </b><p>{{food.protein}}</p></label></li>
-			<li><label><b>Sodium: </b><p>{{food.sodium}}</p></label></li>
-			<li><label><b>Sugars: </b><p>{{food.sugars}}</p></label></li>
-		</ul>
-	</div>
+	<div  ng-repeat="food in diary.foods">
+		<div class="row">
+			<div class="foodContainer">
+				<h6 class="center-align">{{food.title}}</h6>
+			</div>
+			<div class="row center-align">
+				<ul>
+					<li><label><b>Calories: </b><p>{{food.calories}}</p></label></li>
+					<li><label><b>Fat: </b><p>{{food.fat}}</p></label></li>
+					<li><label><b>Protein: </b><p>{{food.protein}}</p></label></li>
+					<li><label><b>Sodium: </b><p>{{food.sodium}}</p></label></li>
+					<li><label><b>Sugars: </b><p>{{food.sugars}}</p></label></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 <div class="divider"></div>
 </div>

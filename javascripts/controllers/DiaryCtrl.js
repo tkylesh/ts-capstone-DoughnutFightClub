@@ -63,17 +63,15 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		});
 	};
 
-	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-		$scope.diaries = FbDiaries;
-		$scope.diaryByDate = $scope.diaries.filter(function(object){
-			return object.date === $scope.today;
-		});
-		console.log('diaryByDate', $scope.diaryByDate);
-	});
+	// DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+	// 	$scope.diaries = FbDiaries;
+	// 	$scope.diaryByDate = $scope.diaries.filter(function(object){
+	// 		return object.date === $scope.today;
+	// 	});
+	// 	console.log('diaryByDate', $scope.diaryByDate);
+	// });
 
-
-
-	//accumulate totals for each stat
+	// accumulate totals for each stat
 	// $scope.diaryByDate.forEach(function(diary){
 	// 	$scope.totalCalories += diary.totalCalories;
 	// 	$scope.totalFat += diary.totalFat;
