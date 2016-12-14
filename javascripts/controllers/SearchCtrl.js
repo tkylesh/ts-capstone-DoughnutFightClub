@@ -37,11 +37,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	//---!!!messing around with firebase methods!!!---//
 
 
-	// getMeals
-	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-		$scope.existingDiaries = FbDiaries;
-		console.log('existing diaries: ', $scope.existingDiaries);
-	});
+	
 
 
 
@@ -102,22 +98,49 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	    $scope.newDiary.category = $scope.activeMenu;
 	    $scope.newDiary.date = getDate();
 	    $scope.newDiary.uid = $rootScope.user.uid;
-	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
-	    console.log('$scope.newDiary.date', getDate());
-	    console.log('$scope.newDiary.uid', $scope.newDiary.uid);
+	    // console.log('$scope.newDiary.category ', $scope.newDiary.category);
+	    // console.log('$scope.newDiary.date', getDate());
+	    // console.log('$scope.newDiary.uid', $scope.newDiary.uid);
 	    $('#modal1').modal('close');
 
-		console.log('new meal to post: ', $scope.newDiary);
+		
 
-		DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
-			// $location.url("/diary");
-			$scope.newDiary = {};
+		// getMeals
+		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+			$scope.existingDiaries = FbDiaries;
+			console.log('existing diaries: ', $scope.existingDiaries);
+
+			$scope.existingDiaries.forEach(function(diary){
+				console.log("existing diary uid", diary.uid);
+				console.log("uid", $rootScope.user.uid);
+				if(diary.uid === $rootScope.user.uid){
+					console.log("existing diary date", diary.date);
+					console.log("date", $scope.newDiary.date);
+					if(diary.date === $scope.newDiary.date){
+						console.log("existing diary category", diary.category);
+						console.log("category", $scope.newDiary.category);
+						if(diary.category === $scope.newDiary.category){
+							console.log("meal id", diary.id);
+							$scope.mealId = diary.id;
+						}
+					}
+				}
+			});
+
+			console.log('mealId', $scope.mealId);
+
+			if ($scope.mealId !== undefined){
+				console.log(`diary with id ${$scope.mealId} already exists`);
+				$scope.newDiary.mealId = $scope.mealId;
+			}else {
+				console.log('new meal to post: ', $scope.newDiary);
+				DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
+					// $location.url("/diary");
+					$scope.newDiary.mealId = diaryId;
+				});
+			}
 		});
 	};
-
-
-
-	
 
 
 	// let uid = $rootScope.user.uid;
@@ -135,13 +158,15 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 
 	$scope.constructFoods = (ingredient, calories, fat, protein, sodium, sugars)=>{
-		$scope.tempFood.ingredient = ingredient;
+		$scope.tempFood.title = ingredient;
 		$scope.tempFood.calories = calories;
 		$scope.tempFood.fat = fat;
 		$scope.tempFood.protein = protein;
 		$scope.tempFood.sodium = sodium;
 		$scope.tempFood.sugars = sugars;
 		$scope.newDiary.uid = $rootScope.user.uid;
+
+		addNewFood($scope.tempFood);
 	};
 
 
@@ -219,7 +244,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 	
 
-	$scope.addNewFood= function(tempFood){
+	let addNewFood= function(tempFood){
 
 		$scope.newDiary.calories = tempFood.calories;
 		$scope.newDiary.fat = tempFood.fat;
@@ -227,7 +252,13 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.sugars = tempFood.sugars;
 		$scope.newDiary.sodium = tempFood.sodium;
 		$scope.newDiary.title = tempFood.ingredient;
-	};
+
+		console.log('new food object to post or put', $scope.newDiary);
+		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
+			console.log("new foodId: ", foodId);
+			$scope.newDiary = {};
+		});
+	};	
 });
 
 
