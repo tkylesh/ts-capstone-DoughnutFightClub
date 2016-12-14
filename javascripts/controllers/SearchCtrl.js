@@ -251,7 +251,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.protein = tempFood.protein;
 		$scope.newDiary.sugars = tempFood.sugars;
 		$scope.newDiary.sodium = tempFood.sodium;
-		$scope.newDiary.title = tempFood.ingredient;
+		$scope.newDiary.title = tempFood.title;
 
 		console.log('new food object to post or put', $scope.newDiary);
 		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
