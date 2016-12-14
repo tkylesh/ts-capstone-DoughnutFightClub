@@ -7,12 +7,12 @@ app.factory("FoodFactory", function($q, $http, FIREBASE_CONFIG){
 		return $q((resolve, reject)=>{
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/foods.json?orderBy="uid"&equalTo="${userId}"`)
 			 .success( (response)=>{
-			 	let pins = [];
+			 	let foods = [];
 			 	Object.keys(response).forEach((key)=>{
 			 		response[key].id = key;
-			 		pins.push(response[key]);
+			 		foods.push(response[key]);
 			 	});
-			 	resolve(pins);
+			 	resolve(foods);
 			 })
 			 .error( (errorResponse)=>{
 			 	reject(errorResponse);

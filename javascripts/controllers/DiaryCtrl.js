@@ -37,7 +37,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.diaries = FbDiaries;
 			console.log('diaries: ', $scope.diaries);
-			FoodFactory.getFoodsFB($rootScope.user.id).then(function(FbFoods){
+			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
 				console.log('foods from controller', FbFoods);
 				FbFoods.forEach(function(food){
 					$scope.diaries.forEach(function(diary){
