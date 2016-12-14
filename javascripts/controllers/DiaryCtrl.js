@@ -2,8 +2,7 @@
 
 app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory){
 
-	$scope.diaries = [];
-	$scope.foods = [];
+	
 	$scope.selectedDiary = '';
 	// $scope.selectedDiary = 'Diary0';
 	$scope.totalCalories = 0;
@@ -11,8 +10,32 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.totalProtein = 0;
 	$scope.totalSodium = 0;
 	$scope.totalSugars = 0;
+	$scope.diaries = [];
+	$scope.foods = [];
 
-	
+
+	//getMeals
+	//lists all meals on the diary page
+	let getAllDiaries = function(){
+		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+			console.log('diaries: ', FbDiaries);
+			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
+				console.log('foods from controller', FbFoods);
+				FbFoods.forEach(function(food){
+					FbDiaries.forEach(function(diary){
+						console.log('foods', food);
+						if(food.mealId === diary.id){
+							diary.foods = diary.foods || [];
+							diary.foods.push(food);
+							console.log('foods array on diary', diary.foods);
+						}
+					});
+				});
+			});
+		});
+	};
+	getAllDiaries();
+
 	//get the current date to add to newDiary object
 	let getDate = () => {
 		let date = new Date();
@@ -31,26 +54,6 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 
 	$scope.today = getDate();
 
-	//getMeals
-	//lists all meals on the diary page
-	let getAllDiaries = function(){
-		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-			$scope.diaries = FbDiaries;
-			console.log('diaries: ', $scope.diaries);
-			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
-				console.log('foods from controller', FbFoods);
-				FbFoods.forEach(function(food){
-					$scope.diaries.forEach(function(diary){
-						console.log('foods', food);
-						if(food.mealId === diary.id){
-							diary.foods.push(food);
-						}
-					});
-				});
-			});
-		});
-	};
-	getAllDiaries();
 
 	$scope.deleteDiary = (diaryId) =>{
 		DiaryFactory.deleteDiary(diaryId).then((response)=>{
