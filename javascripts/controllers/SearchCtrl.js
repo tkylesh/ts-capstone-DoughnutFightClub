@@ -9,6 +9,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.existingDiaries = [];
 
 
+
 	//---!!!messing around with firebase methods!!!---//
 	//checks firebase for existing diaries
 	// let ref = firebase.database().ref(`/meals`);
@@ -56,6 +57,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		date = mm+'/'+dd+'/'+yyyy;
 		return date;
 	};
+	$scope.date = getDate();
 
 
 
@@ -141,6 +143,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			}
 		});
 	};
+	$scope.category = $scope.activeMenu;
 
 
 	// let uid = $rootScope.user.uid;
@@ -164,6 +167,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.tempFood.protein = protein;
 		$scope.tempFood.sodium = sodium;
 		$scope.tempFood.sugars = sugars;
+		$scope.tempFood.category = $scope.activeMenu;
+		$scope.tempFood.date = $scope.date;
 		$scope.newDiary.uid = $rootScope.user.uid;
 
 		addNewFood($scope.tempFood);
@@ -242,7 +247,6 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	// 	// });
 	// };
 
-	
 
 	let addNewFood= function(tempFood){
 
@@ -252,6 +256,10 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.sugars = tempFood.sugars;
 		$scope.newDiary.sodium = tempFood.sodium;
 		$scope.newDiary.title = tempFood.title;
+		$scope.newDiary.category = tempFood.category;
+	    $scope.newDiary.date = tempFood.date;
+	    $scope.newDiary.mealId = $scope.mealId;
+	    $scope.newDiary.uid = $rootScope.user.uid;
 
 		console.log('new food object to post or put', $scope.newDiary);
 		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
