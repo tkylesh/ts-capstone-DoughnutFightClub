@@ -18,11 +18,12 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	//lists all meals on the diary page
 	let getAllDiaries = function(){
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-			console.log('diaries: ', FbDiaries);
+			$scope.diaries = FbDiaries;
+			console.log('diaries: ', $scope.diaries);
 			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
 				console.log('foods from controller', FbFoods);
 				FbFoods.forEach(function(food){
-					FbDiaries.forEach(function(diary){
+					$scope.diaries.forEach(function(diary){
 						console.log('foods', food);
 						if(food.mealId === diary.id){
 							diary.foods = diary.foods || [];
