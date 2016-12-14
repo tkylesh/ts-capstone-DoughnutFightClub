@@ -24,7 +24,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 				console.log('foods from controller', FbFoods);
 				FbFoods.forEach(function(food){
 					$scope.diaries.forEach(function(diary){
-						console.log('foods', food);
+						// console.log('foods', food);
 						if(food.mealId === diary.id){
 							diary.foods = diary.foods || [];
 							diary.foods.push(food);
@@ -63,13 +63,13 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		});
 	};
 
-	// DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-	// 	$scope.diaries = FbDiaries;
-	// 	$scope.diaryByDate = $scope.diaries.filter(function(object){
-	// 		return object.date === $scope.today;
-	// 	});
-	// 	console.log('diaryByDate', $scope.diaryByDate);
-	// });
+	DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+		$scope.diaries = FbDiaries;
+		$scope.diaryByDate = $scope.diaries.filter(function(object){
+			return object.date === $scope.today;
+		});
+		console.log('diaryByDate', $scope.diaryByDate);
+	});
 
 
 
