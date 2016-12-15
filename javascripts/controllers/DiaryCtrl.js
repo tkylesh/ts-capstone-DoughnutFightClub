@@ -12,6 +12,25 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.foods = [];
 
 
+	// get the current date to add to newDiary object
+	let getDate = () => {
+		let date = new Date();
+		let dd = date.getDate();
+		let mm = date.getMonth()+1;//January is 0
+		let yyyy = date.getFullYear();
+		if(dd<10){
+			dd='0'+dd;
+		}
+		if(mm<10){
+			mm='0'+mm;
+		}
+		date = mm+'/'+dd+'/'+yyyy;
+		// date = new Date(date);
+		return date;
+	};
+
+	$scope.diaryDate = getDate();
+	
 
 	//getMeals
 	//lists all meals on the diary page
@@ -36,25 +55,32 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	};
 	getAllDiaries();
 
-	
 
-	//get the current date to add to newDiary object
-	let getDate = () => {
-		let date = new Date();
-		let dd = date.getDate();
-		let mm = date.getMonth()+1;//January is 0
-		let yyyy = date.getFullYear();
-		if(dd<10){
-			dd='0'+dd;
-		}
-		if(mm<10){
-			mm='0'+mm;
-		}
-		date = mm+'/'+dd+'/'+yyyy;
-		return date;
-	};
+	// $scope.onDateChange = () =>{
+	// 	getAllDiaries();
+	// };
+	// $scope.displayDate= $scope.diaryDate.toLocaleDateString();
 
-	$scope.today = getDate();
+	// DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+	// 	$scope.diaries = FbDiaries;
+	// 	$scope.diaryByDate = $scope.diaries.filter(function(object){
+	// 		return object.date === $scope.diaryDate;
+	// 	});
+	// 	console.log('diaryByDate', $scope.diaryByDate);
+	// 	FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
+	// 			console.log('foods from controller', FbFoods);
+	// 			FbFoods.forEach(function(food){
+	// 				$scope.diaries.forEach(function(diary){
+	// 					// console.log('foods', food);
+	// 					if(food.mealId === diary.id){
+	// 						diary.foods = diary.foods || [];
+	// 						diary.foods.push(food);
+	// 						console.log('foods array on diary', diary.foods);
+	// 					}
+	// 				});
+	// 			});
+	// 		});
+	// 	});
 
 
 	$scope.deleteDiary = (diaryId) =>{

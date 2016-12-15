@@ -38,6 +38,16 @@ app.config(function($routeProvider){
       controller: 'DiaryCtrl',
       resolve: {isAuth} 
     })
+    .when('/diarybydate',{
+      templateUrl:'partials/diarybydate.html',
+      controller: 'DiaryByDateCtrl',
+      resolve: {isAuth} 
+    })
+    .when('/newmeal',{
+      templateUrl:'partials/newmeal.html',
+      controller: 'NewMealCtrl',
+      resolve: {isAuth} 
+    })
     .when('/search',{
       templateUrl:'partials/search.html',
       controller: 'SearchCtrl',
