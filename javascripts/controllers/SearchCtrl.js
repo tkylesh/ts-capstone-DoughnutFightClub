@@ -161,7 +161,32 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		});
 	};
 
-	
+	let addNewFood= function(tempFood){
+
+		$scope.newDiary.calories = tempFood.calories;
+		$scope.newDiary.fat = tempFood.fat;
+		$scope.newDiary.protein = tempFood.protein;
+		$scope.newDiary.sugars = tempFood.sugars;
+		$scope.newDiary.sodium = tempFood.sodium;
+		$scope.newDiary.title = tempFood.title;
+		$scope.newDiary.category = tempFood.category;
+	    $scope.newDiary.date = tempFood.date;
+
+
+	    $scope.newDiary.uid = $rootScope.user.uid;
+
+	    for (let key in $scope.newDiary) {
+	        if ($scope.newDiary[key] === "") {
+	          window.alert("Please fill all fields!");
+	        }
+      	}
+
+		console.log('new food object to post or put', $scope.newDiary);
+		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
+			console.log("new foodId: ", foodId);
+			$scope.newDiary = {};
+		});
+	};	
 
 
 	$scope.constructFoods = (ingredient, calories, fat, protein, sodium, sugars)=>{
@@ -175,11 +200,35 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		if(!$scope.setActiveFlag){
 			$scope.tempFood.date = $scope.date;
 			$scope.tempFood.category = $scope.activeMenu;
-		}
-		
-		$scope.newDiary.uid = $rootScope.user.uid;
+			$scope.newDiary.uid = $rootScope.user.uid;
+
+			// getMeals
+		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+			$scope.existingDiaries = FbDiaries;
+			console.log('existing diaries: ', $scope.existingDiaries);
+			//try and get mealId
+			$scope.existingDiaries.forEach(function(diary){
+				console.log("existing diary uid", diary.uid);
+				console.log("uid", $rootScope.user.uid);
+				if(diary.uid === $rootScope.user.uid){
+					console.log("existing diary date", diary.date);
+					console.log("date", $scope.newDiary.date);
+					if(diary.date === $scope.newDiary.date){
+						console.log("existing diary category", diary.category);
+						console.log("category", $scope.newDiary.category);
+						if(diary.category === $scope.newDiary.category){
+							console.log("meal id", diary.id);
+							$scope.mealId = diary.id;
+						}
+					}
+				}
+			});
+		});
+	}	
 
 		addNewFood($scope.tempFood);
+		$scope.setActiveFlag = false;
+		console.log('setActiveFlag', $scope.setActiveFlag);
 	};
 
 
@@ -254,35 +303,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	// 		}
 	// 	// });
 	// };
-
-
-	let addNewFood= function(tempFood){
-
-		$scope.newDiary.calories = tempFood.calories;
-		$scope.newDiary.fat = tempFood.fat;
-		$scope.newDiary.protein = tempFood.protein;
-		$scope.newDiary.sugars = tempFood.sugars;
-		$scope.newDiary.sodium = tempFood.sodium;
-		$scope.newDiary.title = tempFood.title;
-		$scope.newDiary.category = tempFood.category;
-	    $scope.newDiary.date = tempFood.date;
-
-
-	    $scope.newDiary.uid = $rootScope.user.uid;
-
-	    for (let key in $scope.newDiary) {
-	        if ($scope.newDiary[key] === "") {
-	          window.alert("Please fill all fields!");
-	        }
-      	}
-
-		console.log('new food object to post or put', $scope.newDiary);
-		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
-			console.log("new foodId: ", foodId);
-			$scope.newDiary = {};
-		});
-	};	
 });
+
 
 
 
