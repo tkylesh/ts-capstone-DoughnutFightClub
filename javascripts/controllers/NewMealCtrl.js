@@ -32,10 +32,11 @@ app.controller("NewMealCtrl", function($scope, $rootScope, $location, DiaryFacto
 
 	$scope.setActive = function(menuItem) {
 	    $scope.activeMenu = menuItem;
-	    $scope.newDiary.category = $scope.activeMenu;
-	    $scope.newDiary.date = getDate();
-	    console.log('$scope.newDiary.category ', $scope.newDiary.category);
-	    console.log('$scope.newDiary.date', getDate());
+	    console.log("meal category: ", $scope.activeMenu);
+	    // $scope.newDiary.category = $scope.activeMenu;
+	    // $scope.newDiary.date = getDate();
+	    // console.log('$scope.newDiary.category ', $scope.newDiary.category);
+	    // console.log('$scope.newDiary.date', getDate());
 	    $('#modal1').modal('close');
 	};
 });
