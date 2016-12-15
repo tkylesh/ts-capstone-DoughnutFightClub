@@ -57,7 +57,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		date = mm+'/'+dd+'/'+yyyy;
 		return date;
 	};
-	$scope.date = getDate();
+	$scope.diaryDate = getDate();
 
 
 
