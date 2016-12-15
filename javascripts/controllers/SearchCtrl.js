@@ -258,8 +258,16 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.title = tempFood.title;
 		$scope.newDiary.category = tempFood.category;
 	    $scope.newDiary.date = tempFood.date;
+
 	    $scope.newDiary.mealId = $scope.mealId;
+
 	    $scope.newDiary.uid = $rootScope.user.uid;
+
+	    for (let key in $scope.newDiary) {
+	        if ($scope.newDiary[key] === "") {
+	          window.alert("Please fill all fields!");
+	        }
+      	}
 
 		console.log('new food object to post or put', $scope.newDiary);
 		FoodFactory.postFood($scope.newDiary).then((foodId)=>{

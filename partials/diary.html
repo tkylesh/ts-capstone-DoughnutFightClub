@@ -27,8 +27,9 @@
 
 <div class="divider"></div>
 
-<div ng-repeat="diary in diaries | orderBy:'date' ">
+
 <div class="section">
+<div ng-repeat="diary in diaries | orderBy:'date' ">
 	<div class="row">
 		<div class="col s2 push-s11">
 			<a class="btn-floating btn-large waves-effect waves-light red right-align" ng-click="deleteDiary(diary.id)"><i class="material-icons">delete_forever</i></a>
@@ -38,22 +39,46 @@
 		<h5 class="center-align"><b>{{diary.category}}</b></h5> 
 		<h6 class="center-align">{{diary.date}}</h6>
 	</div>
-	<div  ng-repeat="food in diary.foods">
-		<div class="row">
-			<div class="foodContainer">
-				<h6 class="center-align">{{food.title}}</h6>
-			</div>
-			<div class="row center-align">
-				<ul>
-					<li><label><b>Calories: </b><p>{{food.calories}}</p></label></li>
-					<li><label><b>Fat: </b><p>{{food.fat}}</p></label></li>
-					<li><label><b>Protein: </b><p>{{food.protein}}</p></label></li>
-					<li><label><b>Sodium: </b><p>{{food.sodium}}</p></label></li>
-					<li><label><b>Sugars: </b><p>{{food.sugars}}</p></label></li>
-				</ul>
-			</div>
+	
+	<div class="row">
+		<div class="foodContainer">
+		</div>
+		<div class="row center-align">
+			<ul class="collapsible popout" data-collapsible="accordion" watch>
+				<li ng-repeat="food in diary.foods">
+  					<div class="collapsible-header">{{food.title}}</div>
+  					<div class="collapsible-body">
+  						<div class="row">
+							<div>
+							    <div class="col s2 offset-s1 center-align">
+							    	<label><b>Calories: </b><p>{{food.calories}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Fat: </b><p>{{food.fat}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Protein: </b><p>{{food.protein}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Sodium: </b><p>{{food.sodium}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Sugars: </b><p>{{food.sugars}}</p></label>
+							    </div>
+						    </div>
+						</div>
+  					</div>
+  				</li>
+  				<script>
+					//Instert this just after closing </li>             
+				    $(document).ready(function() {
+				    $('.collapsible').collapsible({accordion: true});
+				     });
+    		 	</script>
+			</ul>
 		</div>
 	</div>
-<div class="divider"></div>
 </div>
+</div>
+<div class="divider"></div>
 

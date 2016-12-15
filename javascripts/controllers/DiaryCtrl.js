@@ -1,8 +1,6 @@
 "use strict";
 
 app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory){
-
-	
 	$scope.selectedDiary = '';
 	// $scope.selectedDiary = 'Diary0';
 	$scope.totalCalories = 0;
@@ -13,6 +11,8 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.diaries = [];
 	$scope.foods = [];
 
+	//activate materialize collapsible list 
+	$('.collapsible').collapsible();
 
 	//getMeals
 	//lists all meals on the diary page
@@ -36,6 +36,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		});
 	};
 	getAllDiaries();
+
+	//activate materialize collapsible list 
+	$('.collapsible').collapsible();
 
 	//get the current date to add to newDiary object
 	let getDate = () => {
@@ -62,6 +65,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			getAllDiaries();
 		});
 	};
+
+	//activate materialize collapsible list 
+	$('.collapsible').collapsible();
 
 	// DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 	// 	$scope.diaries = FbDiaries;
