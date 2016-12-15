@@ -4,9 +4,11 @@ app.controller("NewMealCtrl", function($scope, $rootScope, $location, DiaryFacto
 
 	//take all functionality that creates new meals out of search controller and put in this controller.
 	//All meals will now be created from the new meal page.
+
+
 	//activate the google materialize modal
 	$('.modal').modal();
-	$('#modal1').modal('open');
+
 
 	//get the current date to add to newDiary object
 	let getDate = () => {
@@ -37,6 +39,6 @@ app.controller("NewMealCtrl", function($scope, $rootScope, $location, DiaryFacto
 	    // $scope.newDiary.date = getDate();
 	    // console.log('$scope.newDiary.category ', $scope.newDiary.category);
 	    // console.log('$scope.newDiary.date', getDate());
-	    $('#modal1').modal('close');
+	    $('#modal2').modal('close');
 	};
 });

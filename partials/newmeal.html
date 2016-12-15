@@ -8,18 +8,18 @@
 	    <h4 class="col s6 red-text right-align">{{activeMenu}}</h4>
     	<div class="col s1">
     		<!-- Modal Trigger -->
-    		<button class="btn-floating btn-large waves-effect waves-light red" data-target="modal1"><i class="material-icons">mode_edit</i></button>
+    		<button class="btn-floating btn-large waves-effect waves-light red" data-target="modal2"><i class="material-icons">mode_edit</i></button>
     	</div>
 	</div>
 </div>
 
 
  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+  <div id="modal2" class="modal">
     <div class="modal-content">
       <h4>Meal: </h4>
       <div class="collection" ng-repeat="item in menuItems">
-        	<a href="#/search" class="collection-item" ng-click="setActive(item)" ng-class="{active : activeMenu === item}"> {{ item }}</a>
+        	<a href="#/newmeal" class="collection-item" ng-click="setActive(item)" ng-class="{active : activeMenu === item}"> {{ item }}</a>
       </div>
     </div>
     <div class="modal-footer">
