@@ -7,7 +7,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
-
+	$scope.setActiveFlag = false;
 
 
 	//---!!!messing around with firebase methods!!!---//
@@ -131,14 +131,18 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 			console.log('mealId', $scope.mealId);
 
+			$scope.setActiveFlag = true;
+			console.log('set Active flag', $scope.setActiveFlag);
+
 			if ($scope.mealId !== undefined){
 				console.log(`diary with id ${$scope.mealId} already exists`);
 				$scope.newDiary.mealId = $scope.mealId;
 			}else {
 				console.log('new meal to post: ', $scope.newDiary);
-				DiaryFactory.postNewDiary($scope.newDiary).then(function(diaryId){
+				DiaryFactory.postNewDiary($scope.newDiary).then(function(diary){
 					// $location.url("/diary");
-					$scope.newDiary.mealId = diaryId;
+					console.log('new diary', diary.name);
+					$scope.newDiary.mealId = diary.name;
 				});
 			}
 		});
@@ -167,8 +171,12 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.tempFood.protein = protein;
 		$scope.tempFood.sodium = sodium;
 		$scope.tempFood.sugars = sugars;
-		$scope.tempFood.category = $scope.activeMenu;
-		$scope.tempFood.date = $scope.date;
+
+		if(!$scope.setActiveFlag){
+			$scope.tempFood.date = $scope.date;
+			$scope.tempFood.category = $scope.activeMenu;
+		}
+		
 		$scope.newDiary.uid = $rootScope.user.uid;
 
 		addNewFood($scope.tempFood);
@@ -259,7 +267,6 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.category = tempFood.category;
 	    $scope.newDiary.date = tempFood.date;
 
-	    $scope.newDiary.mealId = $scope.mealId;
 
 	    $scope.newDiary.uid = $rootScope.user.uid;
 
