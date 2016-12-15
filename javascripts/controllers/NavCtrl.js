@@ -9,20 +9,12 @@ app.controller("NavCtrl", function($scope, $rootScope){ // NAV CONTROLLER LINE 4
 		url: "#/logout"
 	},
 	{
-		name: `BY DATE`,
-		url:"#/diarybydate",
-	},
-	{
 		name:"DIARY",
 		url: "#/diary"
 	},
 	{
 		name: `+ FOOD`,
 		url:"#/search",
-	},
-	{
-		name: `+ MEAL`,
-		url:"#/newmeal",
 	}
 	];
 });
