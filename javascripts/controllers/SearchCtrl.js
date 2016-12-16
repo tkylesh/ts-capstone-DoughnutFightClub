@@ -169,7 +169,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.sugars = tempFood.sugars;
 		$scope.newDiary.sodium = tempFood.sodium;
 		$scope.newDiary.title = tempFood.title;
-		$scope.newDiary.category = tempFood.category;
+		$scope.newDiary.category = $scope.category;
 	    $scope.newDiary.date = getDate();
 
 
@@ -199,7 +199,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 		if(!$scope.setActiveFlag){
 			$scope.tempFood.date = $scope.date;
-			$scope.tempFood.category = $scope.activeMenu;
+			$scope.tempFood.category = $scope.category;
 			$scope.newDiary.uid = $rootScope.user.uid;
 
 			// getMeals
