@@ -49,13 +49,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
          JSON.stringify({
            	uid: editDiary.uid,
 			date: editDiary.date,
-			category: editDiary.category,
-			ingredients: editDiary.ingredients,
-			totalCalories: editDiary.totalCalories,
-			totalFat: editDiary.totalFat,
-			totalProtein: editDiary.totalProtein,
-			totalSodium: editDiary.totalSodium,
-			totalSugars: editDiary.totalSugars
+			category: editDiary.category
          })
        )
         .success(function(editResponse){
@@ -73,13 +67,7 @@ app.factory("DiaryFactory", function($q, $http, FIREBASE_CONFIG){
 			$http.post(`${FIREBASE_CONFIG.databaseURL}/meals.json`, JSON.stringify({
 				uid: newDiary.uid,
 				date: newDiary.date,
-				category: newDiary.category,
-				ingredients: newDiary.ingredients,
-				totalCalories: newDiary.totalCalories,
-				totalFat: newDiary.totalFat,
-				totalProtein: newDiary.totalProtein,
-				totalSodium: newDiary.totalSodium,
-				totalSugars: newDiary.totalSugars
+				category: newDiary.category
 				})
 			)
 			 .success( (postResponse)=>{

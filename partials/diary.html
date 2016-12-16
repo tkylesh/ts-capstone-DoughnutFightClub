@@ -1,25 +1,38 @@
 <div class="section">
 	<div class="row">
 	    <div class="col s12">
-	    	<h4 class="center-align"><b>{{today}}</b></h4>
+	    <span>
+	    	<!-- <h4 class="center-align" ><b>{{diaryDate}}</b></h4> -->
+	    	<input type="date" class="datepicker center-align hoverable" ng-model="diaryDate" ng-change="onDateChange()" watch>
+	    	<!-- <script>
+		    	$(document).ready(function() {
+		    		$('.datepicker').pickadate({
+					    selectMonths: true, // Creates a dropdown to control month
+					    selectYears: 1, // Creates a dropdown of 1 year to control year
+					    format: 'd mmmm, yyyy',
+					    max: new Date()
+					  });
+		    	});
+	    	</script> -->
+	    </span>
 		</div>
 	</div>
 	<div class="row">
 		<div>
 		    <div class="col s2 offset-s1 center-align">
-		    	<label><b>Calories: </b><p>{{totalCalories}}</p></label>
+		    	<label><b>Calories: </b><p>totalCalories</p></label>
 		    </div>
 		    <div class="col s2 center-align">
-		    	<label><b>Fat: </b><p>{{totalFat}}</p></label>
+		    	<label><b>Fat: </b><p>totalFat</p></label>
 		    </div>
 		    <div class="col s2 center-align">
-		    	<label><b>Protein: </b><p>{{totalProtein}}</p></label>
+		    	<label><b>Protein: </b><p>totalProtein</p></label>
 		    </div>
 		    <div class="col s2 center-align">
-		    	<label><b>Sodium: </b><p>{{totalSodium}}</p></label>
+		    	<label><b>Sodium: </b><p>totalSodium</p></label>
 		    </div>
 		    <div class="col s2 center-align">
-		    	<label><b>Sugars: </b><p>{{totalSugars}}</p></label>
+		    	<label><b>Sugars: </b><p>totalSugars</p></label>
 		    </div>
 	    </div>
 	</div>
@@ -27,25 +40,59 @@
 
 <div class="divider"></div>
 
-<div ng-repeat="diary in diaries | orderBy:'date' ">
-	<div class="section">
-		<div class="row">
-			<h5 class="center-align"><b>{{diary.category}}</b></h5>
-			<h6 class="center-align">{{diary.date}}</h6>
+
+<div class="section">
+<div ng-repeat="diary in diaries | orderBy:date">
+	<div class="row">
+		<div class="col s2 push-s11">
+			<a class="btn-floating btn waves-effect waves-light red" ng-click="deleteDiary(diary.id)"><i class="material-icons">delete_forever</i></a>
 		</div>
-		<div class="row">
-			<h6 class="center-align">{{diary.ingredients}}</h6>
+	</div>
+	<div class="row">
+		<h5 class="center-align"><b>{{diary.category}}</b></h5> 
+		<h6 class="center-align">{{diary.date}}</h6>
+	</div>
+	
+	<div class="row">
+		<div class="foodContainer">
 		</div>
 		<div class="row center-align">
-			<ul>
-				<li><label><b>Calories: </b><p>{{diary.totalCalories}}</p></label></li>
-				<li><label><b>Fat: </b><p>{{diary.totalFat}}</p></label></li>
-				<li><label><b>Protein: </b><p>{{diary.totalProtein}}</p></label></li>
-				<li><label><b>Sodium: </b><p>{{diary.totalSodium}}</p></label></li>
-				<li><label><b>Sugars: </b><p>{{diary.totalSugars}}</p></label></li>
+			<ul class="collapsible popout" data-collapsible="accordion" watch>
+				<li ng-repeat="food in diary.foods">
+  					<div class="collapsible-header"><span><div class="col s10 left-align">{{food.title}}</div><a class="red-text right-align col s2" ng-click="deleteFood(food.id)">&#10006;</a></span></div>
+  					<div class="collapsible-body">
+  						<div class="row">
+							<div>
+							    <div class="col s2 offset-s1 center-align">
+							    	<label><b>Calories: </b><p>{{food.calories}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Fat: </b><p>{{food.fat}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Protein: </b><p>{{food.protein}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Sodium: </b><p>{{food.sodium}}</p></label>
+							    </div>
+							    <div class="col s2 center-align">
+							    	<label><b>Sugars: </b><p>{{food.sugars}}</p></label>
+							    </div>
+						    </div>
+						</div>
+  					</div>
+  				</li>
+  				<script>
+					//Instert this just after closing </li>             
+				    $(document).ready(function() {
+				    $('.collapsible').collapsible({accordion: true});
+				     });
+    		 	</script>
 			</ul>
 		</div>
 	</div>
 <div class="divider"></div>
 </div>
+</div>
+
 
