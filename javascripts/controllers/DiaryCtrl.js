@@ -48,6 +48,43 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	};
 	getAllDiaries();
 
+	//method to calculate the $scope variables that will pass the totals to the diary page.
+	let calcDailyTotals = () => {
+
+		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
+			$scope.diaries = FbDiaries;
+			$scope.diaryByDate = $scope.diaries.filter(function(diary){
+				return diary.date === MealIdService.getActiveDate();
+			});
+			console.log('diaryByDate', $scope.diaryByDate);
+		}).then(()=>{
+
+			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
+				// console.log('foods from controller', FbFoods);
+				FbFoods.forEach(function(food){
+					$scope.diaryByDate.forEach(function(diary){
+						// console.log('foods', food);
+						if(food.mealId === diary.id){
+							// diary.foods = diary.foods || [];
+							$scope.totalCalories += food.calories;
+							$scope.totalFat += food.fat;
+							$scope.totalProtein += food.protein;
+							$scope.totalSodium += food.sodium;
+							$scope.totalSugars += food.sugars;
+						}
+					});
+				});
+			});
+		});
+	};
+
+	let clearStats = () => {
+		$scope.totalCalories = 0;
+		$scope.totalFat = 0;
+		$scope.totalProtein = 0;
+		$scope.totalSodium = 0; 
+		$scope.totalSugars = 0;
+	};
 
 	// get the current date to add to newDiary object
 	let getDate = () => {
@@ -73,13 +110,14 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		$scope.stringDate = MealIdService.getActiveDate();
 		console.log('Active date set to ', MealIdService.getActiveDate());
 		// picker.set('select', `${dd} ${mm}, ${yyyy}`, { format: 'd mmmm, yyyy' });
+		clearStats();
+		calcDailyTotals();
 	};
 	getDate();
 
 	$scope.onDateChange = () => {
-		event.stopPropagation();
-		event.preventDefault();
-
+		// event.stopPropagation();
+		// event.preventDefault();
 		console.log('onchange event triggered');
 		$scope.diaryDate = new Date(picker.get());
 		console.log("diaryDate", $scope.diaryDate);
@@ -88,29 +126,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		console.log('Active date set to ', MealIdService.getActiveDate());
 		$scope.stringDate = MealIdService.getActiveDate();
 		picker.close(true);
+		clearStats();
+		calcDailyTotals();
 	};
-
-	//method to calculate the $scope variables that will pass the totals to the diary page.
-	let calcDailyTotals = () => {
-
-		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
-			$scope.diaries = FbDiaries;
-			$scope.diaryByDate = $scope.diaries.filter(function(diary){
-				return diary.date === $scope.stringDate;
-			});
-			console.log('diaryByDate', $scope.diaryByDate);
-		});
-
-		// accumulate totals for each stat
-		$scope.diaryByDate.forEach(function(diary){
-			$scope.totalCalories += diary.totalCalories;
-			$scope.totalFat += diary.totalFat;
-			$scope.totalProtein += diary.totalProtein;
-			$scope.totalSodium += diary.totalSodium;
-			$scope.totalSugars += diary.totalSugars;
-		});
-	};
-
 
 
 	$scope.deleteDiary = (diaryId) =>{
