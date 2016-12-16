@@ -16,7 +16,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$('.datepicker').pickadate({
 	    selectMonths: true, // Creates a dropdown to control month
 	    selectYears: 1, // Creates a dropdown of 1 year to control year
-	    format: 'd mmmm, yyyy',
+	    format: 'mm/dd/yyyy',
 	    max: new Date()
 	});
 
@@ -30,7 +30,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	let getDate = () => {
 		let date = new Date();
 		let dd = date.getDate();
-		let mm = date.getMonth();//January is 0
+		let mm = date.getMonth()+1;//January is 0
 		let yyyy = date.getFullYear();
 		if(dd<10){
 			dd='0'+dd;
@@ -39,9 +39,15 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			mm='0'+mm;
 		}
 		date = mm+'/'+dd+'/'+yyyy;
-		$scope.diaryDate = new Date(`${yyyy}`, `${mm}`, `${dd}`);
+
+		let setStringDate = date;
+
+
+		$scope.diaryDate = new Date(`${yyyy}`, `${mm-1}`, `${dd}`);
 		console.log('diaryDate: ', $scope.diaryDate);
-		MealIdService.setActiveDate($scope.diaryDate);
+
+		MealIdService.setActiveDate(setStringDate);
+		$scope.stringDate = MealIdService.getActiveDate();
 		console.log('Active date set to ', MealIdService.getActiveDate());
 		// picker.set('select', `${dd} ${mm}, ${yyyy}`, { format: 'd mmmm, yyyy' });
 	};
@@ -57,6 +63,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 
 		MealIdService.setActiveDate(picker.get());
 		console.log('Active date set to ', MealIdService.getActiveDate());
+		$scope.stringDate = MealIdService.getActiveDate();
 		picker.close(true);
 	};
 	
