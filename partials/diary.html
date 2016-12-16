@@ -44,9 +44,15 @@
 <!-- orderBy:'-date'" --><!--this is the filter used to get all diaries by date in descending order.-->
 <div ng-repeat="diary in diaries | filter: stringDate">
 	<div class="row">
-		<div class="col s2 push-s11">
-			<a class="btn-floating btn waves-effect waves-light red" ng-click="deleteDiary(diary.id)"><i class="material-icons">delete_forever</i></a>
-		</div>
+		<span>
+		<div class="col s10"></div>
+		<div class="col s1">
+	      <a class="btn-floating green"><i class="material-icons">add</i></a>
+	    </div>
+	    <div class="col s1">
+	      <a class="btn-floating red" ng-click="deleteDiary(diary.id)"><i class="material-icons">delete_forever</i></a>
+	    </div>
+	    </span>
 	</div>
 	<div class="row">
 		<h5 class="center-align"><b>{{diary.category}}</b></h5> 
