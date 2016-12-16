@@ -57,7 +57,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		date = mm+'/'+dd+'/'+yyyy;
 		return date;
 	};
-	$scope.diaryDate = getDate();
+	$scope.date = getDate();
 
 
 
@@ -170,7 +170,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		$scope.newDiary.sodium = tempFood.sodium;
 		$scope.newDiary.title = tempFood.title;
 		$scope.newDiary.category = tempFood.category;
-	    $scope.newDiary.date = tempFood.date;
+	    $scope.newDiary.date = getDate();
 
 
 	    $scope.newDiary.uid = $rootScope.user.uid;
@@ -224,6 +224,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				}
 			});
 		});
+		console.log("mealId", $scope.mealId);
 	}	
 
 		addNewFood($scope.tempFood);
