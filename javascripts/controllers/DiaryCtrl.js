@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory){
+app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory, MealIdService){
 	$scope.selectedDiary = '';
 	// $scope.selectedDiary = 'Diary0';
 	$scope.totalCalories = 0;
@@ -10,13 +10,27 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.totalSugars = 0;
 	$scope.diaries = [];
 	$scope.foods = [];
+	$scope.diaryDate = new Date();
+	
+	//initialize materialize date picker
+	$('.datepicker').pickadate({
+	    selectMonths: true, // Creates a dropdown to control month
+	    selectYears: 1, // Creates a dropdown of 1 year to control year
+	    format: 'd mmmm, yyyy',
+	    max: new Date()
+	});
+
+	var $input = $('.datepicker').pickadate();
+
+	// Use the picker object directly.
+	var picker = $input.pickadate('picker');
 
 
 	// get the current date to add to newDiary object
 	let getDate = () => {
 		let date = new Date();
 		let dd = date.getDate();
-		let mm = date.getMonth()+1;//January is 0
+		let mm = date.getMonth();//January is 0
 		let yyyy = date.getFullYear();
 		if(dd<10){
 			dd='0'+dd;
@@ -25,11 +39,26 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			mm='0'+mm;
 		}
 		date = mm+'/'+dd+'/'+yyyy;
-		// date = new Date(date);
-		return date;
+		$scope.diaryDate = new Date(`${yyyy}`, `${mm}`, `${dd}`);
+		console.log('diaryDate: ', $scope.diaryDate);
+		MealIdService.setActiveDate($scope.diaryDate);
+		console.log('Active date set to ', MealIdService.getActiveDate());
+		// picker.set('select', `${dd} ${mm}, ${yyyy}`, { format: 'd mmmm, yyyy' });
 	};
+	getDate();
 
-	$scope.diaryDate = getDate();
+	$scope.onDateChange = () => {
+		event.stopPropagation();
+		event.preventDefault();
+
+		console.log('onchange event triggered');
+		$scope.diaryDate = new Date(picker.get());
+		console.log("diaryDate", $scope.diaryDate);
+
+		MealIdService.setActiveDate(picker.get());
+		console.log('Active date set to ', MealIdService.getActiveDate());
+		picker.close(true);
+	};
 	
 
 	//getMeals
@@ -39,14 +68,14 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			$scope.diaries = FbDiaries;
 			console.log('diaries: ', $scope.diaries);
 			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
-				console.log('foods from controller', FbFoods);
+				// console.log('foods from controller', FbFoods);
 				FbFoods.forEach(function(food){
 					$scope.diaries.forEach(function(diary){
 						// console.log('foods', food);
 						if(food.mealId === diary.id){
 							diary.foods = diary.foods || [];
 							diary.foods.push(food);
-							console.log('foods array on diary', diary.foods);
+							// console.log('foods array on diary', diary.foods);
 						}
 					});
 				});

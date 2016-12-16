@@ -1,18 +1,20 @@
 <div class="section">
 	<div class="row">
 	    <div class="col s12">
-	    	<h4 class="center-align"><b>{{diaryDate}}</b></h4>
-	    	<!-- <input type="date" class="datepicker center-align" ng-model="diaryDate" ng-change="onDateChange">
-	    	<script>
+	    <span>
+	    	<!-- <h4 class="center-align" ><b>{{diaryDate}}</b></h4> -->
+	    	<input type="date" class="datepicker center-align hoverable" ng-model="diaryDate" ng-change="onDateChange()" watch>
+	    	<!-- <script>
 		    	$(document).ready(function() {
 		    		$('.datepicker').pickadate({
 					    selectMonths: true, // Creates a dropdown to control month
 					    selectYears: 1, // Creates a dropdown of 1 year to control year
-					    format: 'mm/dd/yyyy',
+					    format: 'd mmmm, yyyy',
 					    max: new Date()
 					  });
 		    	});
 	    	</script> -->
+	    </span>
 		</div>
 	</div>
 	<div class="row">
@@ -89,7 +91,8 @@
 			</ul>
 		</div>
 	</div>
-</div>
-</div>
 <div class="divider"></div>
+</div>
+</div>
+
 
