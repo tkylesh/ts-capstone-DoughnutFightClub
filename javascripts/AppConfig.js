@@ -43,13 +43,8 @@ app.config(function($routeProvider){
       controller: 'SearchCtrl',
       resolve: {isAuth} 
     })
-    .when('/search/add/breakfast', {
-      templateUrl:'partials/search.html',
-      controller: 'SearchCtrl',
-      resolve: {isAuth} 
-    })
     .when('/edit/:id', {
-      templateUrl:'partials/search.html,
+      templateUrl:'partials/edit.html,
       controller: 'EditCtrl',
       resolve: {isAuth}
     })
