@@ -43,11 +43,6 @@ app.config(function($routeProvider){
       controller: 'SearchCtrl',
       resolve: {isAuth} 
     })
-    .when('/search/add/breakfast', {
-      templateUrl:'partials/search.html',
-      controller: 'SearchCtrl',
-      resolve: {isAuth} 
-    })
     .when('/logout', {
       templateUrl:'partials/auth.html',
       controller: 'AuthCtrl',
