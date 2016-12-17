@@ -44,7 +44,7 @@ app.config(function($routeProvider){
       resolve: {isAuth} 
     })
     .when('/edit/:id', {
-      templateUrl:'partials/edit.html,
+      templateUrl:'partials/edit.html',
       controller: 'EditCtrl',
       resolve: {isAuth}
     })

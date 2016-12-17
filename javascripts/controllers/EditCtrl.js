@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("EditCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
+app.controller("EditCtrl", function($scope, $rootScope, $location, $routeParams, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
 	$scope.tempFood = {};
@@ -35,7 +35,7 @@ app.controller("EditCtrl", function($scope, $rootScope, $location, NutrixFactory
 
 
 	$scope.addEditedDiary = () => {
-		DiaryFactory.editDiary($scope.editMeal).then((response){
+		DiaryFactory.editDiary($scope.editMeal).then((response) =>{
 			$scope.editMeal = {};
 			$location.url("/diary");
 		});
