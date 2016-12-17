@@ -14,16 +14,15 @@ app.controller("EditCtrl", function($scope, $rootScope, $location, $routeParams,
 	console.log('$routeParams', mealId);
 
 	DiaryFactory.getSingleDiary(mealId).then((diary) => {
+		console.log('diary: ', diary);
 		diary.id = mealId;
 		$scope.editMeal = diary;
 
-		console.log('diaries: ', $scope.diaries);
 		FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
 			// console.log('foods from controller', FbFoods);
 			FbFoods.forEach(function(food){
-				$scope.EditMeal.forEach(function(diary){
 					// console.log('foods', food);
-					if(food.mealId === diary.id){
+					if(food.mealId === $scope.editMeal.id){
 						diary.foods = diary.foods || [];
 						diary.foods.push(food);
 						// console.log('foods array on diary', diary.foods);
