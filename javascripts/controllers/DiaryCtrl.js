@@ -54,7 +54,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.diaries = FbDiaries;
 			$scope.diaryByDate = $scope.diaries.filter(function(diary){
-				return diary.date === MealIdService.getActiveDate();
+				return diary.date === $scope.stringDate;
 			});
 			console.log('diaryByDate', $scope.diaryByDate);
 		}).then(()=>{
@@ -125,9 +125,11 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		MealIdService.setActiveDate(picker.get());
 		console.log('Active date set to ', MealIdService.getActiveDate());
 		$scope.stringDate = MealIdService.getActiveDate();
+		console.log("on change stringDate", $scope.stringDate);
 		picker.close(true);
 		clearStats();
 		calcDailyTotals();
+		getAllDiaries();
 	};
 
 
