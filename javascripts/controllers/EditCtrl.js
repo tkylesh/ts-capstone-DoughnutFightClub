@@ -21,13 +21,12 @@ app.controller("EditCtrl", function($scope, $rootScope, $location, $routeParams,
 		FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
 			// console.log('foods from controller', FbFoods);
 			FbFoods.forEach(function(food){
-					// console.log('foods', food);
-					if(food.mealId === $scope.editMeal.id){
-						diary.foods = diary.foods || [];
-						diary.foods.push(food);
-						// console.log('foods array on diary', diary.foods);
-					}
-				});
+				// console.log('foods', food);
+				if(food.mealId === $scope.editMeal.id){
+					diary.foods = diary.foods || [];
+					diary.foods.push(food);
+					// console.log('foods array on diary', diary.foods);
+				}
 			});
 		});
 	});
