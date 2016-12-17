@@ -50,7 +50,6 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 
 	//method to calculate the $scope variables that will pass the totals to the diary page.
 	let calcDailyTotals = () => {
-
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.diaries = FbDiaries;
 			$scope.diaryByDate = $scope.diaries.filter(function(diary){

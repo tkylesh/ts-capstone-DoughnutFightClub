@@ -19,7 +19,7 @@ app.service('MealIdService',function($q, $http, $rootScope){
 	};
 
 
-	//date methods
+	//get diary dates (DiaryCtrl.js).
 	this.setActiveDate = (date) => {
 		this.FoodData.date = date;
 	};
@@ -30,5 +30,17 @@ app.service('MealIdService',function($q, $http, $rootScope){
 
 	this.clearActiveDate = () => {
 		this.FoodData.date = null;
+	};
+
+	//Edit diary dates (SearchCtrl.js).
+	this.setEditDate = (date) => {
+		this.FoodData.editDate = date;
+	};
+	this.getEditDate = () => {
+		return this.FoodData.editDate;
+	};
+
+	this.clearEditDate = () => {
+		this.FoodData.editDate = null;
 	};
 });

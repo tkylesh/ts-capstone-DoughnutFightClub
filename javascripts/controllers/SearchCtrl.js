@@ -7,6 +7,19 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
+
+	//initialize materialize date picker
+	$('.datepicker').pickadate({
+	    selectMonths: true, // Creates a dropdown to control month
+	    selectYears: 1, // Creates a dropdown of 1 year to control year
+	    format: 'mm/dd/yyyy',
+	    max: new Date()
+	});
+
+	var $input = $('.datepicker').pickadate();
+
+	// Use the picker object directly.
+	var picker = $input.pickadate('picker');
 	
 
 	//get the current date to add to newDiary object
@@ -22,24 +35,32 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			mm='0'+mm;
 		}
 		date = mm+'/'+dd+'/'+yyyy;
-		return date;
-	};
-	$scope.date = getDate();
+		let setStringDate = date;
 
+
+		$scope.diaryDate = new Date(`${yyyy}`, `${mm-1}`, `${dd}`);
+		console.log('diaryDate: ', $scope.diaryDate);
+
+		MealIdService.setEditDate(setStringDate);
+		$scope.stringDate = MealIdService.getEditDate();
+		console.log('Edit date set to ', MealIdService.getEditDate());
+	};
+	getDate();
 
 
 	//activate the google materialize modal
 	$('.modal').modal();
-	$('#modal1').modal('open');
+	// $('#modal1').modal('open');
 
 	//Set the Meal category to active when a link is clicked
 	$scope.menuItems = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACKS'];
 	$scope.activeMenu = $scope.menuItems[0];
 
 	$scope.setActive = function(menuItem) {
+		console.log('setActive function triggered');
 	    $scope.activeMenu = menuItem;
 	    $scope.newDiary.category = $scope.activeMenu;
-	    $scope.newDiary.date = getDate();
+	    $scope.newDiary.date = MealIdService.getEditDate();
 	    $scope.newDiary.uid = $rootScope.user.uid;
 	    // console.log('$scope.newDiary.category ', $scope.newDiary.category);
 	    // console.log('$scope.newDiary.date', getDate());
@@ -87,10 +108,20 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			}
 		});
 	};
-	$scope.category = $scope.activeMenu;
 
+	//When date changed on datepicker.
+	$scope.onDateChange =  () => {
+		console.log('onchange event triggered');
+		//sets current date on datepicker display
+		$scope.diaryDate = new Date(picker.get());
+		console.log("diaryDate", $scope.diaryDate);
 
-	// let uid = $rootScope.user.uid;
+		MealIdService.setEditDate(picker.get());
+		console.log('Edit date set to ', MealIdService.getEditDate());
+		$scope.stringDate = MealIdService.getEditDate();
+		console.log("on change stringDate", $scope.stringDate);
+		picker.close(true);
+	};
 
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
