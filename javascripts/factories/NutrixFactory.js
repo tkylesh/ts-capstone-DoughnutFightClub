@@ -7,15 +7,30 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 	let ingredientList = (searchText) =>{
 		return (
 			$q((resolve,reject) =>{
-				let authPart =`x-app-Id=${NUTRITIONIXAPIKEY.appId}&x-app-key=${NUTRITIONIXAPIKEY.appKey}&Content-Type:application/json`;
+				// let authPart =`x-app-Id=${NUTRITIONIXAPIKEY.appId}&x-app-key=${NUTRITIONIXAPIKEY.appKey}`;
 
-				$http.get('https://trackapi.nutritionix.com/v2/search/instant?query=${searchText}')
-					.success( (response) => {
-					console.log('nutrix response', response);
-					// resolve(response.hits);
-				}).error(function(errorResponse){
-					console.log('nutrix fail', errorResponse);
-					// reject(errorResponse);
+				// $http.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${searchText}&${authPart}`)
+				// 	.success( (response) => {
+				// 	console.log('nutrix response', response);
+				// 	// resolve(response.hits);
+				// }).error(function(errorResponse){
+				// 	console.log('nutrix fail', errorResponse);
+				// 	// reject(errorResponse);
+				// });
+				$.ajax({
+					method: 'GET',
+					url:`https://trackapi.nutritionix.com/v2/search/instant?query=${searchText}`,
+					headers:{
+						"x-app-Id":"e9bfed54",
+						"x-app-key":"8f291f15c2b4327bb1b83d321d95d4da",
+						"Content-Type":"application/json"
+					}
+				}).then((response) => {
+					console.log('ntx response: ', response);
+					resolve(response);
+				}, (error)=>{
+					console.log('ntx error: ', error);
+					reject(error);
 				});
 
 

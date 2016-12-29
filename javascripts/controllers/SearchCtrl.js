@@ -95,10 +95,10 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
-			response.forEach(function(item){
+			response.branded.forEach(function(item){
 				console.log("fields", item.fields);
 			});
-			$scope.searchResults = response;
+			$scope.searchResults = response.branded;
 		}).catch((error) => {
 			console.log('Nutrix Search Error', error);
 		});
