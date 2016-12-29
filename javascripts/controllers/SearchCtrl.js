@@ -96,9 +96,17 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
 			response.branded.forEach(function(item){
-				console.log("fields", item.fields);
+				// console.log("branded item", item);
+				$scope.searchResults.push(item);
+				// console.log("searchResult branded", $scope.searchResults);
 			});
-			$scope.searchResults = response.branded;
+
+			response.common.forEach(function(item){
+				// console.log("common item", item);
+				$scope.searchResults.push(item);
+				// console.log("searchResults common", $scope.searchResults);
+			});
+			console.log("searchResults", $scope.searchResults);
 		}).catch((error) => {
 			console.log('Nutrix Search Error', error);
 		});
