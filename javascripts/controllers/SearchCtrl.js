@@ -3,6 +3,7 @@
 app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
+	$scope.nutrients = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
@@ -89,9 +90,17 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	};
 	$scope.category = $scope.activeMenu;
 
+	$scope.getNutrientsForResult = (foodId)=>{
+		NutrixFactory.getNutrients(foodId).then(function(nutrients){
+				console.log('nutrients returned', nutrients);
+				$scope.nutrients.push(nutrients);
+				console.log('nutrients array', $scope.nutrients);
+		});
+		console.log('nutrients array', $scope.nutrients);
+	};
+
 
 	// let uid = $rootScope.user.uid;
-
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
@@ -107,6 +116,14 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				// console.log("searchResults common", $scope.searchResults);
 			});
 			console.log("searchResults", $scope.searchResults);
+			return $scope.searchResults;
+		}).then(function(){
+			//get nutrition facts for each 
+			$scope.searchResults.forEach(function(item){
+				console.log('foodId', item.nix_item_id);
+				$scope.getNutrientsForResult(item.nix_item_id);
+			});
+			console.log('nutrients array', $scope.nutrients);
 		}).catch((error) => {
 			console.log('Nutrix Search Error', error);
 		});
