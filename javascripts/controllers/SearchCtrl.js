@@ -3,6 +3,8 @@
 app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
+	$scope.searchResultsBranded = [];
+	$scope.searchResultsCommon = [];
 	$scope.nutrients = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
@@ -105,6 +107,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
+			$scope.searchResultsBranded = response.data.branded;
+			$scope.searchResultsCommon = response.data.common;
 			response.data.branded.forEach(function(item){
 				// console.log("branded item", item);
 				$scope.searchResults.push(item);
