@@ -6,6 +6,8 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.searchResultsBranded = [];
 	$scope.searchResultsCommon = [];
 	$scope.nutrients = [];
+	$scope.nutrientsBranded = [];
+	$scope.nutrientsCommon = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
