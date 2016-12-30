@@ -93,6 +93,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.getNutrientsForResult = (foodId)=>{
 		NutrixFactory.getNutrients(foodId).then(function(nutrients){
 				console.log('nutrients returned', nutrients);
+				// $scope.nutrients = $scope.nutrients || [];
 				$scope.nutrients.push(nutrients);
 				console.log('nutrients array', $scope.nutrients);
 		});
@@ -104,19 +105,18 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
-			response.branded.forEach(function(item){
+			response.data.branded.forEach(function(item){
 				// console.log("branded item", item);
 				$scope.searchResults.push(item);
 				// console.log("searchResult branded", $scope.searchResults);
 			});
 
-			response.common.forEach(function(item){
+			response.data.common.forEach(function(item){
 				// console.log("common item", item);
 				$scope.searchResults.push(item);
 				// console.log("searchResults common", $scope.searchResults);
 			});
 			console.log("searchResults", $scope.searchResults);
-			return $scope.searchResults;
 		}).then(function(){
 			//get nutrition facts for each 
 			$scope.searchResults.forEach(function(item){
