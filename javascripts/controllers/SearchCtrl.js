@@ -94,11 +94,21 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	};
 	$scope.category = $scope.activeMenu;
 
-	$scope.getNutrientsForResult = (foodId)=>{
+	$scope.getNutrientsForBranded = (foodId)=>{
 		NutrixFactory.getNutrients(foodId).then(function(nutrients){
 				console.log('nutrients returned', nutrients);
 				// $scope.nutrients = $scope.nutrients || [];
 				$scope.nutrients.push(nutrients);
+				console.log('nutrients array', $scope.nutrients);
+		});
+		console.log('nutrients array', $scope.nutrients);
+	};
+
+	$scope.getNutrientsForCommon = (foodname)=>{
+		NutrixFactory.getCommonNutrients(foodname).then(function(nutrients){
+				console.log('nutrients returned', nutrients[0].fields);
+				// $scope.nutrients = $scope.nutrients || [];
+				$scope.nutrients.push(nutrients[0].fields);
 				console.log('nutrients array', $scope.nutrients);
 		});
 		console.log('nutrients array', $scope.nutrients);
@@ -125,9 +135,13 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			console.log("searchResults", $scope.searchResults);
 		}).then(function(){
 			//get nutrition facts for each 
-			$scope.searchResults.forEach(function(item){
-				console.log('foodId', item.nix_item_id);
-				$scope.getNutrientsForResult(item.nix_item_id);
+			$scope.searchResultsBranded.forEach(function(item){
+				console.log('branded foodId', item.nix_item_id);
+				$scope.getNutrientsForBranded(item.nix_item_id);
+			});
+			$scope.searchResultsCommon.forEach(function(item){
+				console.log('common foodId', item.food_name);
+				$scope.getNutrientsForCommon(item.food_name);
 			});
 			console.log('nutrients array', $scope.nutrients);
 		}).catch((error) => {
