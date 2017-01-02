@@ -25,11 +25,11 @@
 	</div>
 	<div class="row">
 		<h3></h3>
-		<div ng-repeat="result in searchResults">
+		<div ng-repeat="result in nutrients">
 			<div class="card medium col s12 m6 l3">
 				<div class="card-image waves-effect waves-block waves-light">
 					<img class="responsive-img" src={{result.photo.thumb}}/>
-              		<span class="card-title grey-text text-darken-4 truncate">{{result.food_name}}</span>
+              		<span class="card-title grey-text text-darken-4 truncate">{{result.item_name}}</span>
 				</div>
 				<div class="row">
 					<div class="col s12">
@@ -47,13 +47,13 @@
 		          	</div>
 		        </div>
 		        <div class="card-reveal">
-	      			<span class="card-title grey-text text-darken-4" id="cardTest" ng-click="reEnable()">{{result.food_name}}<i class="material-icons right" >close</i></span>
+	      			<span class="card-title grey-text text-darken-4" id="cardTest" ng-click="reEnable()">{{result.item_name}}<i class="material-icons right" >close</i></span>
 	      			<ul class="collection">
-				      <li class="collection-item"><label><b>Calories:</b> </label>{{result.fields.nf_calories}}</li>
-				      <li class="collection-item"><label><b>Fat:</b> </label>{{result.fields.nf_total_fat}}</li>
-				      <li class="collection-item"><label><b>Sodium:</b> </label>{{result.fields.nf_sodium}}</li>
-				      <li class="collection-item"><label><b>Sugar:</b> </label>{{result.fields.nf_sugars}}</li>
-				      <li class="collection-item"><label><b>Protein:</b> </label>{{result.fields.nf_protein}}</li>
+				      <li class="collection-item"><label><b>Calories:</b> </label>{{result.nf_calories}}</li>
+				      <li class="collection-item"><label><b>Fat:</b> </label>{{result.nf_total_fat}}</li>
+				      <li class="collection-item"><label><b>Sodium:</b> </label>{{result.nf_sodium}}</li>
+				      <li class="collection-item"><label><b>Sugar:</b> </label>{{result.nf_sugars}}</li>
+				      <li class="collection-item"><label><b>Protein:</b> </label>{{result.nf_protein}}</li>
 				    </ul>
 	    		</div>
 		    </div>
