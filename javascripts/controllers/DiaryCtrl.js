@@ -138,7 +138,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, Diar
 	$scope.deleteDiary = (diaryId) =>{
 		DiaryFactory.deleteDiary(diaryId).then((response)=>{
 			console.log("delete Diary Response", response);
-			// clearStats();
+			clearStats();
 			calcDailyTotals();
 			getAllDiaries();
 			// $route.reload();
@@ -149,7 +149,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, Diar
 	$scope.deleteFood = (foodId) =>{
 		FoodFactory.deleteFood(foodId).then((response)=>{
 			console.log("delete Diary Response", response);
-			// clearStats();
+			clearStats();
 			calcDailyTotals();
 			getAllDiaries();
 			// $route.reload();
