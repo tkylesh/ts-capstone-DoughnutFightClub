@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory, MealIdService){
+app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, DiaryFactory, FoodFactory, MealIdService){
 	$scope.selectedDiary = '';
 	// $scope.selectedDiary = 'Diary0';
 	$scope.totalCalories = 0;
@@ -46,7 +46,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			});
 		});
 	};
-	getAllDiaries();
+	$(document).ready(function(){
+		 getAllDiaries();
+	});
 
 	//method to calculate the $scope variables that will pass the totals to the diary page.
 	let calcDailyTotals = () => {
@@ -79,11 +81,11 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	};
 
 	let clearStats = () => {
-		$scope.totalCalories = 0;
-		$scope.totalFat = 0;
-		$scope.totalProtein = 0;
-		$scope.totalSodium = 0; 
-		$scope.totalSugars = 0;
+		$scope.totalCalories = null;
+		$scope.totalFat = null;
+		$scope.totalProtein = null;
+		$scope.totalSodium = null; 
+		$scope.totalSugars = null;
 	};
 
 	// get the current date to add to newDiary object
@@ -128,16 +130,18 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		console.log("on change stringDate", $scope.stringDate);
 		picker.close(true);
 		clearStats();
-		calcDailyTotals();
 		getAllDiaries();
+		calcDailyTotals();
 	};
 
 
 	$scope.deleteDiary = (diaryId) =>{
 		DiaryFactory.deleteDiary(diaryId).then((response)=>{
 			console.log("delete Diary Response", response);
-			getAllDiaries();
+			// clearStats();
 			calcDailyTotals();
+			getAllDiaries();
+			// $route.reload();
 		});
 
 	};
@@ -145,8 +149,10 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.deleteFood = (foodId) =>{
 		FoodFactory.deleteFood(foodId).then((response)=>{
 			console.log("delete Diary Response", response);
-			getAllDiaries();
+			// clearStats();
 			calcDailyTotals();
+			getAllDiaries();
+			// $route.reload();
 		});
 	};
 });
