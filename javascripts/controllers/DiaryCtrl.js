@@ -137,7 +137,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 		DiaryFactory.deleteDiary(diaryId).then((response)=>{
 			console.log("delete Diary Response", response);
 			getAllDiaries();
+			calcDailyTotals();
 		});
+
 	};
 
 	$scope.deleteFood = (foodId) =>{
