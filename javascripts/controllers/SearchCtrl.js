@@ -122,6 +122,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 		console.log('new food object to post or put', $scope.newDiary);
 		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
+			Materialize.toast(`${$scope.newDiary.title} added to ${$scope.activeMenu} ${$scope.newDiary.date}`, 4000);
 			console.log("new foodId: ", foodId);
 			$scope.newDiary = {};
 		});
