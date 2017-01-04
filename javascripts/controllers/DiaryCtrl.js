@@ -146,7 +146,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, Diar
 
 	};
 
-	$scope.deleteFood = (foodId) =>{
+
+	$scope.deleteFood = (foodId, $event) =>{
+		$event.preventDefault();
 		FoodFactory.deleteFood(foodId).then((response)=>{
 			console.log("delete Diary Response", response);
 			clearStats();
