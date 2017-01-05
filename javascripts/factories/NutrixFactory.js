@@ -28,7 +28,17 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 		return $q((resolve,reject) =>{
 			$http({
 				method: 'Post',
-				url:`https://trackapi.nutritionix.com/v2/natural/nutrients?query=${searchObject}`,
+				url:`https://trackapi.nutritionix.com/v2/natural/nutrients?{
+					  "query": ${searchObject.item_name},
+					  "num_servings": 1,
+					  "aggregate": "string",
+					  "line_delimited": false,
+					  "timezone": "US/Eastern",
+					  "consumed_at": null,
+					  "lat": null,
+					  "lng": null,
+					  "meal_type": 0
+					}`,
 				headers:{
 					"x-app-Id":"e9bfed54",
 					"x-app-key":"8f291f15c2b4327bb1b83d321d95d4da",
