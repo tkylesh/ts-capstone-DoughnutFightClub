@@ -13,6 +13,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
 	
+	// nixApi.setApiCredentials("e9bfed54","8f291f15c2b4327bb1b83d321d95d4da");
 
 	//get the current date to add to newDiary object
 	let getDate = () => {
@@ -118,6 +119,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 	// let uid = $rootScope.user.uid;
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
+
 			console.log('Nutrix Search Results', response);
 			$scope.searchResultsBranded = response.data.branded;
 			$scope.searchResultsCommon = response.data.common;
@@ -133,6 +135,17 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 				// console.log("searchResults common", $scope.searchResults);
 			});
 			console.log("searchResults", $scope.searchResults);
+			$scope.searchResults.forEach(function(item){
+				console.log('finding image for', item.food_name);
+				NutrixFactory.getImages(item.food_name).then(function(response){
+					// console.log('getImages response status', response.status);
+					console.log('No Image Found for', item.food_name);
+					console.log('SUCCESS', response.data);
+
+				}, function(error){
+					console.log('ERROR',error);
+				});
+			});
 		}).then(function(){
 			//get nutrition facts for each 
 			$scope.searchResultsBranded.forEach(function(item){

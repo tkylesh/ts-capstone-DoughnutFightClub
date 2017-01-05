@@ -15,41 +15,35 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 					"Content-Type":"application/json"
 				}
 			}).then((response) => {
-				console.log('ntx response: ', response);
+				// console.log('ntx response: ', response);
 				resolve(response);
 			}, (error)=>{
-				console.log('ntx error: ', error);
+				// console.log('ntx error: ', error);
 				reject(error);
 			});
 		});
 	};
 
-	let getImages = (searchObject)=> {
+	let getImages = (query)=> {
 		return $q((resolve,reject) =>{
 			$http({
 				method: 'Post',
-				url:`https://trackapi.nutritionix.com/v2/natural/nutrients?{
-					  "query": ${searchObject.item_name},
-					  "num_servings": 1,
-					  "aggregate": "string",
-					  "line_delimited": false,
-					  "timezone": "US/Eastern",
-					  "consumed_at": null,
-					  "lat": null,
-					  "lng": null,
-					  "meal_type": 0
-					}`,
+				url:`https://trackapi.nutritionix.com/v2/natural/nutrients`,
 				headers:{
 					"x-app-Id":"e9bfed54",
 					"x-app-key":"8f291f15c2b4327bb1b83d321d95d4da",
 					"x-remote-user-id":"0",
 					"Content-Type":"application/json"
+				},
+				data:{
+ 					"query": `${query}`,
+ 					"timezone": "US/Eastern"
 				}
 			}).then((response) => {
-				console.log('get Image response: ', response);
+				// console.log('get Image response: ', response);
 				resolve(response);
 			}, (error)=>{
-				console.log('get Image error: ', error);
+				// console.log('get Image error: ', error);
 				reject(error);
 			});
 		});
@@ -66,10 +60,10 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 				method:'GET',
 				url:`https://api.nutritionix.com/v1_1/item?id=${foodId}&${authPart}`
 			}).success((response)=>{
-				console.log('nutrix response nutrients request', response);
+				// console.log('nutrix response nutrients request', response);
 				resolve(response);
 			}).error((errorResponse)=>{
-				console.log('nutrix fail nutrients request', errorResponse);
+				// console.log('nutrix fail nutrients request', errorResponse);
 				resolve(errorResponse);
 			});
 		});
@@ -84,10 +78,10 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 
 					$http.get(`https://api.nutritionix.com/v1_1/search/${searchText}?${filter}&${authPart}&"limit"="1"&"offset"="0"&"sort"={"field": "nf_calories","order": "desc"}`)
 						.success( (response) => {
-						console.log('nutrix response', response);
+						// console.log('nutrix response', response);
 						resolve(response.hits);
 					}).error(function(errorResponse){
-						console.log('nutrix fail', errorResponse);
+						// console.log('nutrix fail', errorResponse);
 						reject(errorResponse);
 					});
 				
