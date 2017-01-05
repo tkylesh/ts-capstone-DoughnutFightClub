@@ -11,9 +11,10 @@ let isAuth = (AuthFactory) =>  new Promise((resolve, reject) => {
 app.run(function($rootScope, $location, FIREBASE_CONFIG, AuthFactory){
   firebase.initializeApp(FIREBASE_CONFIG);
 
+
   $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
 
-  	let logged = AuthFactory.isAuthenticated();
+  	let logged = AuthFactory.isAuthenticated("e9bfed54","8f291f15c2b4327bb1b83d321d95d4da");
   	let appTo;
 
   	if(currRoute.originalPath){
@@ -42,6 +43,11 @@ app.config(function($routeProvider){
       templateUrl:'partials/search.html',
       controller: 'SearchCtrl',
       resolve: {isAuth} 
+    })
+    .when('/edit/:id', {
+      templateUrl:'partials/edit.html',
+      controller: 'EditCtrl',
+      resolve: {isAuth}
     })
     .when('/logout', {
       templateUrl:'partials/auth.html',

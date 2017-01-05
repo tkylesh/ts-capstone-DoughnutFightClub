@@ -3,11 +3,17 @@
 app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
+	$scope.searchResultsBranded = [];
+	$scope.searchResultsCommon = [];
+	$scope.nutrients = [];
+	$scope.nutrientsBranded = [];
+	$scope.nutrientsCommon = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
 	
+	// nixApi.setApiCredentials("e9bfed54","8f291f15c2b4327bb1b83d321d95d4da");
 
 	//get the current date to add to newDiary object
 	let getDate = () => {
@@ -51,19 +57,19 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		// getMeals
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.existingDiaries = FbDiaries;
-			console.log('existing diaries: ', $scope.existingDiaries);
+			// console.log('existing diaries: ', $scope.existingDiaries);
 
 			$scope.existingDiaries.forEach(function(diary){
-				console.log("existing diary uid", diary.uid);
-				console.log("uid", $rootScope.user.uid);
+				// console.log("existing diary uid", diary.uid);
+				// console.log("uid", $rootScope.user.uid);
 				if(diary.uid === $rootScope.user.uid){
-					console.log("existing diary date", diary.date);
-					console.log("date", $scope.newDiary.date);
+					// console.log("existing diary date", diary.date);
+					// console.log("date", $scope.newDiary.date);
 					if(diary.date === $scope.newDiary.date){
-						console.log("existing diary category", diary.category);
-						console.log("category", $scope.newDiary.category);
+						// console.log("existing diary category", diary.category);
+						// console.log("category", $scope.newDiary.category);
 						if(diary.category === $scope.newDiary.category){
-							console.log("meal id", diary.id);
+							// console.log("meal id", diary.id);
 							$scope.mealId = diary.id;
 						}
 					}
@@ -71,34 +77,95 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			});
 
 			if ($scope.mealId !== undefined){
-				console.log(`diary with id ${$scope.mealId} already exists`);
+				// console.log(`diary with id ${$scope.mealId} already exists`);
 				$scope.newDiary.mealId = $scope.mealId;
 				MealIdService.setMealId($scope.newDiary.mealId);
-				console.log('get Meal Id: ', MealIdService.getMealId());
+				// console.log('get Meal Id: ', MealIdService.getMealId());
 			}else {
-				console.log('new meal to post: ', $scope.newDiary);
+				// console.log('new meal to post: ', $scope.newDiary);
 				DiaryFactory.postNewDiary($scope.newDiary).then(function(diary){
 					// $location.url("/diary");
-					console.log('new diary', diary.name);
+					// console.log('new diary', diary.name);
 					$scope.newDiary.mealId = diary.name;
 					MealIdService.setMealId($scope.newDiary.mealId);
-					console.log('get Meal Id: ', MealIdService.getMealId());
+					// console.log('get Meal Id: ', MealIdService.getMealId());
 				});
 			}
 		});
 	};
 	$scope.category = $scope.activeMenu;
 
+	// $scope.getNutrientsForBranded = (foodId)=>{
+	// 	NutrixFactory.getNutrients(foodId).then(function(nutrients){
+	// 			// console.log('nutrients returned', nutrients);
+	// 			// $scope.nutrients = $scope.nutrients || [];
+	// 			$scope.nutrients.push(nutrients);
+	// 			// console.log('nutrients array', $scope.nutrients);
+	// 	});
+	// 	console.log('nutrients array', $scope.nutrients);
+	// };
+
+	// $scope.getNutrientsForCommon = (foodname)=>{
+	// 	NutrixFactory.getCommonNutrients(foodname).then(function(nutrients){
+	// 			// console.log('nutrients returned', nutrients[0].fields);
+	// 			// $scope.nutrients = $scope.nutrients || [];
+	// 			$scope.nutrients.push(nutrients[0].fields);
+	// 			// console.log('nutrients array', $scope.nutrients);
+	// 	});
+	// 	console.log('nutrients array', $scope.nutrients);
+	// };
+
 
 	// let uid = $rootScope.user.uid;
-
 	$scope.NutrixSearch = function(){
-		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
-			console.log('Nutrix Search Results', response);
-			$scope.searchResults = response;
-		}).catch((error) => {
-			console.log('Nutrix Search Error', error);
-		});
+		// NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
+
+		// 	console.log('Nutrix Search Results', response);
+		// 	$scope.searchResultsBranded = response.data.branded;
+		// 	$scope.searchResultsCommon = response.data.common;
+		// 	response.data.branded.forEach(function(item){
+		// 		// console.log("branded item", item);
+		// 		$scope.searchResults.push(item);
+		// 		// console.log("searchResult branded", $scope.searchResults);
+		// 	});
+
+		// 	response.data.common.forEach(function(item){
+		// 		// console.log("common item", item);
+		// 		$scope.searchResults.push(item);
+		// 		// console.log("searchResults common", $scope.searchResults);
+		// 	});
+			// console.log("searchResults", $scope.searchNutrix);
+
+			// $scope.searchResultsBranded.forEach(function(item){
+				NutrixFactory.getImages($scope.searchNutrix).then(function(response){
+					// console.log('getImages response status', response.status);
+					console.log('SUCCESS', response);
+					response.data.foods.forEach(function(item){
+						console.log('image url', item.photo.thumb);
+					});
+					$scope.searchResults = response.data.foods;
+
+				}, function(error){
+					console.log('ERROR',error);
+				});
+			// });
+
+		// })
+		// .then(function(){
+		// 	//get nutrition facts for each 
+		// 	// $scope.searchResultsBranded.forEach(function(item){
+		// 	// 	console.log('branded foodId', item.nix_item_id);
+		// 	// 	$scope.getNutrientsForBranded(item.nix_item_id);
+		// 	// });
+		// 	// $scope.searchResultsCommon.forEach(function(item){
+		// 	// 	console.log('common foodId', item.food_name);
+		// 	// 	$scope.getNutrientsForCommon(item.food_name);
+		// 	// });
+		// 	// console.log('nutrients array', $scope.nutrients);
+		// })
+		// .catch((error) => {
+		// 	console.log('Nutrix Search Error', error);
+		// });
 	};
 
 	let addNewFood= function(tempFood){

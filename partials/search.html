@@ -16,9 +16,9 @@
 <div class="section">
 	<div class="row">
 	    <div class="col s9 offset-s3">
-	        <div class="input-field col s6 center-align center">
-	            <input type="search" class="form-control" ng-model="searchNutrix" ng-keyup="$event.keyCode === 13 && NutrixSearch()">
-	            <label>Search for Ingredients</label>
+	        <div class=" form-control input-field col s6 center-align center">
+	            <input type="search" autocomplete="on" class="form-control" ng-model="searchNutrix" ng-keyup="$event.keyCode === 13 && NutrixSearch()">
+	            <!-- <label>Search for Ingredients</label> -->
 	        </div>
 	            <button type="button" class="waves-effect waves-light btn col s2" ng-click="NutrixSearch()" id="searchBtn"><i class="small material-icons">search</i></button> 
 	    </div>
@@ -26,42 +26,35 @@
 	<div class="row">
 		<h3></h3>
 		<div ng-repeat="result in searchResults">
-			<div class="card small col s3 offset-s1">
+			<div class="card medium col s12 m6 l3">
 				<div class="card-image waves-effect waves-block waves-light">
+					<img class="responsive-img" src={{result.photo.thumb}}>
+              		<span class="card-title grey-text text-darken-4 truncate">{{result.item_name}}</span>
 				</div>
 				<div class="row">
 					<div class="col s12">
 				        <div class="card-content">
-				          	<span class="card-title activator grey-text text-darken-4 truncate">{{result.fields.item_name}}<i class="material-icons right">more_vert</i></span>
+				          	<!-- <span class="card-title activator grey-text text-darken-4 truncate">{{result.brand_name_item_name}}<i class="material-icons right">more_vert</i></span> -->
 				        </div>
 			        </div>
 		        </div>
 		        <div class="row">
 		          	<div class="card-action">
-		          		<div class="col s1 pull-11">
+		          		<div class="col s12 m6 l3">
 		          			<a class="btn-floating btn-small waves-effect waves-light red left" ng-click="constructFoods(result.fields.item_name,result.fields.nf_calories,result.fields.nf_total_fat, result.fields.nf_protein,result.fields.nf_sodium,result.fields.nf_sugars)"><i class="material-icons">add</i></a>
 		          		</div>
+		          			<i class="material-icons waves-effect waves-block waves-light activator right">more_vert</i>
 		          	</div>
 		        </div>
 		        <div class="card-reveal">
-	      			<span class="card-title grey-text text-darken-4" id="cardTest" ng-click="reEnable()">{{result.fields.item_name}}<i class="material-icons right" >close</i></span>
+	      			<span class="card-title grey-text text-darken-4" id="cardTest" ng-click="reEnable()">{{result.item_name}}<i class="material-icons right" >close</i></span>
 	      			<ul class="collection">
-				      <li class="collection-item"><label><b>Calories:</b> </label>{{result.fields.nf_calories}}</li>
-				      <li class="collection-item"><label><b>Fat:</b> </label>{{result.fields.nf_total_fat}}</li>
-				      <li class="collection-item"><label><b>Sodium:</b> </label>{{result.fields.nf_sodium}}</li>
-				      <li class="collection-item"><label><b>Sugar:</b> </label>{{result.fields.nf_sugars}}</li>
-				      <li class="collection-item"><label><b>Protein:</b> </label>{{result.fields.nf_protein}}</li>
+				      <li class="collection-item"><label><b>Calories:</b> </label>{{result.nf_calories}}</li>
+				      <li class="collection-item"><label><b>Fat:</b> </label>{{result.nf_total_fat}}</li>
+				      <li class="collection-item"><label><b>Sodium:</b> </label>{{result.nf_sodium}}</li>
+				      <li class="collection-item"><label><b>Sugar:</b> </label>{{result.nf_sugars}}</li>
+				      <li class="collection-item"><label><b>Protein:</b> </label>{{result.nf_protein}}</li>
 				    </ul>
-	      			<!-- <div class="card-action"> -->
-		      			<!-- <label ng-show="boardsArray.length">Select Board</label> -->
-						<!-- <select ng-model="selectedOption" material-select ng-show="boardsArray.length">
-			  				<option value="">-Please select-</option>  not selected / blank option -->
-			  				<!-- <option value="createNewBoard" href="#/boards/new" ng-show="!boardsArray.length">Create new board</option>  -->
-			  				<!-- <option ng-repeat="boardArray in boardsArray" ng-selected="boardArray==selectedOption" value="{{boardArray.id}}">{{boardArray.boardTitle}}</option> 
-						</select>
-							<button ng-show="!boardsArray.length" class="waves-effect waves-light btn col s8" ng-click="newBoard()">Create New Board<i class="small material-icons">content-save</i></button>
-							<button ng-show="boardsArray.length" class="waves-effect waves-light btn col s8" ng-click="savePin(selectedOption, searchImage); removeSearchImage(searchImage)">Save Pin<i class="small material-icons">content-save</i></button> -->
-					<!-- </div> -->
 	    		</div>
 		    </div>
 		</div>

@@ -1,7 +1,7 @@
 {
-  "name": "ts-capstone-DoughnutFightClub",
+  "name": "ts-capstone-doughnutfightclub",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "authors": [],
   "license": "MIT",
   "homepage": "https://github.com/tkylesh/ts-capstone-DoughnutFightClub",
