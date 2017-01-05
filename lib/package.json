@@ -18,6 +18,7 @@
     "matchdep": "^1.0.1"
   },
   "dependencies": {
+    "angucomplete-alt": "^3.0.0",
     "grunt-contrib-copy": "^1.0.0"
   }
 }
