@@ -10,6 +10,24 @@ div.authBackground{
     position: fixed;
 }
 
+img{
+	// box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	display: block;
+	margin: auto;
+	// border: 1px solid #ddd;
+	padding: 2px;
+	height: 80px;
+	width: auto;
+	max-width: 100%;
+	max-height: 100%;
+	border-radius: 8px;
+
+}
+
+i:hover{
+	cursor: pointer;
+}
+
 // .form-group{
 // 	background-color: transparent !important;
 // }
