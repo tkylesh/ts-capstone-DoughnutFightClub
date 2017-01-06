@@ -24,5 +24,30 @@ app.factory("NutrixFactory",function($q, $http, FIREBASE_CONFIG, NUTRITIONIXAPIK
 		);
 	};
 
-	return {ingredientList: ingredientList};
+	let getImages = (query)=> {
+		return $q((resolve,reject) =>{
+			$http({
+				method: 'Post',
+				url:`https://trackapi.nutritionix.com/v2/natural/nutrients`,
+				headers:{
+					"x-app-Id":"e9bfed54",
+					"x-app-key":"8f291f15c2b4327bb1b83d321d95d4da",
+					"x-remote-user-id":"0",
+					"Content-Type":"application/json"
+				},
+				data:{
+ 					"query": `${query}`,
+ 					"timezone": "US/Eastern"
+				}
+			}).then((response) => {
+				// console.log('get Image response: ', response);
+				resolve(response);
+			}, (error)=>{
+				// console.log('get Image error: ', error);
+				reject(error);
+			});
+		});
+	};
+
+	return {ingredientList: ingredientList, getImages:getImages};
 });

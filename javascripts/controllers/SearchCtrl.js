@@ -3,6 +3,7 @@
 app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
+	$scope.alterResults = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
@@ -92,10 +93,27 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 	// let uid = $rootScope.user.uid;
 
+
 	$scope.NutrixSearch = function(){
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
 			$scope.searchResults = response;
+			$scope.searchResults.forEach(function(item){
+				NutrixFactory.getImages($scope.searchNutrix).then(function(response){
+					// console.log('getImages response status', response.status);
+					console.log('SUCCESS', response);
+					response.data.foods.forEach(function(item){
+						console.log('image url', item.photo.thumb);
+						item.image = item.photo.thumb;
+						$scope.alterResults.push(item);
+					});
+					console.log('altered searchResults array', $scope.alterResults);
+					// $scope.searchResults = response.data.foods;
+
+				}, function(error){
+					console.log('ERROR',error);
+				});
+			});
 		}).catch((error) => {
 			console.log('Nutrix Search Error', error);
 		});
