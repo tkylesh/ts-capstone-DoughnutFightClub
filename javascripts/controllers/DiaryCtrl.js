@@ -149,7 +149,11 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, Diar
 
 
 	$scope.deleteFood = (foodId, $event) =>{
-		$event.preventDefault();
+		// console.log('$event', $event);
+		$event.stopPropagation();
+		$('.collapsible').collapsible({
+      			accordion: false
+      	});
 		FoodFactory.deleteFood(foodId).then((response)=>{
 			// console.log("delete Diary Response", response);
 			clearStats();
