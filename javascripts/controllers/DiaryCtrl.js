@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory, FoodFactory, MealIdService){
+app.controller("DiaryCtrl", function($scope, $rootScope, $route, $location, DiaryFactory, FoodFactory, MealIdService){
 	$scope.selectedDiary = '';
 	// $scope.selectedDiary = 'Diary0';
 	$scope.totalCalories = 0;
@@ -30,7 +30,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	let getAllDiaries = function(){
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.diaries = FbDiaries;
-			console.log('diaries: ', $scope.diaries);
+			// console.log('diaries: ', $scope.diaries);
 			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
 				// console.log('foods from controller', FbFoods);
 				FbFoods.forEach(function(food){
@@ -46,7 +46,9 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			});
 		});
 	};
-	getAllDiaries();
+	$(document).ready(function(){
+		 getAllDiaries();
+	});
 
 	//method to calculate the $scope variables that will pass the totals to the diary page.
 	let calcDailyTotals = () => {
@@ -56,7 +58,7 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 			$scope.diaryByDate = $scope.diaries.filter(function(diary){
 				return diary.date === $scope.stringDate;
 			});
-			console.log('diaryByDate', $scope.diaryByDate);
+			// console.log('diaryByDate', $scope.diaryByDate);
 		}).then(()=>{
 
 			FoodFactory.getFoodsFB($rootScope.user.uid).then(function(FbFoods){
@@ -79,11 +81,11 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	};
 
 	let clearStats = () => {
-		$scope.totalCalories = 0;
-		$scope.totalFat = 0;
-		$scope.totalProtein = 0;
-		$scope.totalSodium = 0; 
-		$scope.totalSugars = 0;
+		$scope.totalCalories = null;
+		$scope.totalFat = null;
+		$scope.totalProtein = null;
+		$scope.totalSodium = null; 
+		$scope.totalSugars = null;
 	};
 
 	// get the current date to add to newDiary object
@@ -104,11 +106,11 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 
 
 		$scope.diaryDate = new Date(`${yyyy}`, `${mm-1}`, `${dd}`);
-		console.log('diaryDate: ', $scope.diaryDate);
+		// console.log('diaryDate: ', $scope.diaryDate);
 
 		MealIdService.setActiveDate(setStringDate);
 		$scope.stringDate = MealIdService.getActiveDate();
-		console.log('Active date set to ', MealIdService.getActiveDate());
+		// console.log('Active date set to ', MealIdService.getActiveDate());
 		// picker.set('select', `${dd} ${mm}, ${yyyy}`, { format: 'd mmmm, yyyy' });
 		clearStats();
 		calcDailyTotals();
@@ -118,32 +120,47 @@ app.controller("DiaryCtrl", function($scope, $rootScope, $location, DiaryFactory
 	$scope.onDateChange = () => {
 		// event.stopPropagation();
 		// event.preventDefault();
-		console.log('onchange event triggered');
+		// console.log('onchange event triggered');
 		$scope.diaryDate = new Date(picker.get());
-		console.log("diaryDate", $scope.diaryDate);
+		// console.log("diaryDate", $scope.diaryDate);
 
 		MealIdService.setActiveDate(picker.get());
-		console.log('Active date set to ', MealIdService.getActiveDate());
+		// console.log('Active date set to ', MealIdService.getActiveDate());
 		$scope.stringDate = MealIdService.getActiveDate();
-		console.log("on change stringDate", $scope.stringDate);
+		// console.log("on change stringDate", $scope.stringDate);
 		picker.close(true);
 		clearStats();
-		calcDailyTotals();
 		getAllDiaries();
+		calcDailyTotals();
 	};
 
 
 	$scope.deleteDiary = (diaryId) =>{
 		DiaryFactory.deleteDiary(diaryId).then((response)=>{
-			console.log("delete Diary Response", response);
+			// console.log("delete Diary Response", response);
+			clearStats();
 			getAllDiaries();
+			calcDailyTotals();
+			
+			// $route.reload();
 		});
+
 	};
 
-	$scope.deleteFood = (foodId) =>{
+
+	$scope.deleteFood = (foodId, $event) =>{
+		// console.log('$event', $event);
+		$event.stopPropagation();
+		$('.collapsible').collapsible({
+      			accordion: false
+      	});
 		FoodFactory.deleteFood(foodId).then((response)=>{
-			console.log("delete Diary Response", response);
+			// console.log("delete Diary Response", response);
+			clearStats();
 			getAllDiaries();
+			calcDailyTotals();
+			
+			// $route.reload();
 		});
 	};
 });

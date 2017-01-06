@@ -47,7 +47,7 @@
 		<span>
 		<div class="col s10"></div>
 		<div class="col s1">
-	      <a class="btn-floating green"><i class="material-icons">add</i></a>
+	      <!-- <a class="btn-floating green" ng-href="#/edit/{{diary.id}}""><i class="material-icons">add</i></a> -->
 	    </div>
 	    <div class="col s1">
 	      <a class="btn-floating red" ng-click="deleteDiary(diary.id)"><i class="material-icons">delete_forever</i></a>
@@ -65,7 +65,7 @@
 		<div class="row center-align">
 			<ul class="collapsible popout" data-collapsible="accordion" watch>
 				<li ng-repeat="food in diary.foods">
-  					<div class="collapsible-header"><span><div class="col s10 left-align">{{food.title}}</div><a class="red-text right-align col s2" ng-click="deleteFood(food.id)">&#10006;</a></span></div>
+  					<div class="collapsible-header"><span><div class="col s10 left-align">{{food.title}}</div><a class="red-text right-align col s2" ng-click="deleteFood(food.id, $event)">&#10006;</a></span></div>
   					<div class="collapsible-body">
   						<div class="row">
 							<div>

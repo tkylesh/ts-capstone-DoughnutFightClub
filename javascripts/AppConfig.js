@@ -43,6 +43,11 @@ app.config(function($routeProvider){
       controller: 'SearchCtrl',
       resolve: {isAuth} 
     })
+    // .when('/edit/:id', {
+    //   templateUrl:'partials/edit.html',
+    //   controller: 'EditCtrl',
+    //   resolve: {isAuth}
+    // })
     .when('/logout', {
       templateUrl:'partials/auth.html',
       controller: 'AuthCtrl',

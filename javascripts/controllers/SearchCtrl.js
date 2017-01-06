@@ -3,10 +3,12 @@
 app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFactory, DiaryFactory, FoodFactory, MealIdService, FIREBASE_CONFIG){
 	$scope.searchNutrix= '';
 	$scope.searchResults = [];
+	$scope.alterResults = [];
 	$scope.newDiary = {};
 	$scope.tempFood = {};
 	$scope.tempTitleArray = [];
 	$scope.existingDiaries = [];
+	$scope.imageFlag = false;
 	
 
 	//get the current date to add to newDiary object
@@ -51,19 +53,19 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 		// getMeals
 		DiaryFactory.getDiary($rootScope.user.uid).then(function(FbDiaries) {
 			$scope.existingDiaries = FbDiaries;
-			console.log('existing diaries: ', $scope.existingDiaries);
+			// console.log('existing diaries: ', $scope.existingDiaries);
 
 			$scope.existingDiaries.forEach(function(diary){
-				console.log("existing diary uid", diary.uid);
-				console.log("uid", $rootScope.user.uid);
+				// console.log("existing diary uid", diary.uid);
+				// console.log("uid", $rootScope.user.uid);
 				if(diary.uid === $rootScope.user.uid){
-					console.log("existing diary date", diary.date);
-					console.log("date", $scope.newDiary.date);
+					// console.log("existing diary date", diary.date);
+					// console.log("date", $scope.newDiary.date);
 					if(diary.date === $scope.newDiary.date){
-						console.log("existing diary category", diary.category);
-						console.log("category", $scope.newDiary.category);
+						// console.log("existing diary category", diary.category);
+						// console.log("category", $scope.newDiary.category);
 						if(diary.category === $scope.newDiary.category){
-							console.log("meal id", diary.id);
+							// console.log("meal id", diary.id);
 							$scope.mealId = diary.id;
 						}
 					}
@@ -71,18 +73,18 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 			});
 
 			if ($scope.mealId !== undefined){
-				console.log(`diary with id ${$scope.mealId} already exists`);
+				// console.log(`diary with id ${$scope.mealId} already exists`);
 				$scope.newDiary.mealId = $scope.mealId;
 				MealIdService.setMealId($scope.newDiary.mealId);
-				console.log('get Meal Id: ', MealIdService.getMealId());
+				// console.log('get Meal Id: ', MealIdService.getMealId());
 			}else {
-				console.log('new meal to post: ', $scope.newDiary);
+				// console.log('new meal to post: ', $scope.newDiary);
 				DiaryFactory.postNewDiary($scope.newDiary).then(function(diary){
 					// $location.url("/diary");
-					console.log('new diary', diary.name);
+					// console.log('new diary', diary.name);
 					$scope.newDiary.mealId = diary.name;
 					MealIdService.setMealId($scope.newDiary.mealId);
-					console.log('get Meal Id: ', MealIdService.getMealId());
+					// console.log('get Meal Id: ', MealIdService.getMealId());
 				});
 			}
 		});
@@ -92,10 +94,30 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 	// let uid = $rootScope.user.uid;
 
+
 	$scope.NutrixSearch = function(){
+		$scope.imageFlag = true;
 		NutrixFactory.ingredientList($scope.searchNutrix).then(function(response){
 			console.log('Nutrix Search Results', response);
 			$scope.searchResults = response;
+			$scope.searchResults.forEach(function(item){
+				NutrixFactory.getImages(item.fields.item_name).then(function(response){
+					// console.log('getImages response status', response.status);
+					console.log('SUCCESS', response);
+					response.data.foods.forEach(function(imageItem){
+						console.log('image url', imageItem.photo.thumb);
+						item.image = imageItem.photo.thumb;
+						$scope.alterResults.push(item);
+						console.log('altered searchResults array', $scope.alterResults);
+					});
+					// $scope.searchResults = response.data.foods;
+				}, function(error){
+					console.log('ERROR',error);
+					item.image = "/Images/apple-grey_image.png";
+					$scope.alterResults.push(item);
+					console.log('altered searchResults array', $scope.alterResults);
+				});
+			});
 		}).catch((error) => {
 			console.log('Nutrix Search Error', error);
 		});
@@ -122,6 +144,7 @@ app.controller("SearchCtrl", function($scope, $rootScope, $location, NutrixFacto
 
 		console.log('new food object to post or put', $scope.newDiary);
 		FoodFactory.postFood($scope.newDiary).then((foodId)=>{
+			Materialize.toast(`${$scope.newDiary.title} added to ${$scope.activeMenu} ${$scope.newDiary.date}`, 4000);
 			console.log("new foodId: ", foodId);
 			$scope.newDiary = {};
 		});

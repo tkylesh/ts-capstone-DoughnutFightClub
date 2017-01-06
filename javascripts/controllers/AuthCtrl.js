@@ -4,6 +4,7 @@ app.controller("AuthCtrl", function($scope, $rootScope, $location, AuthFactory, 
 	$scope.loginContainer = true;
 	$scope.registerContainer = false;
 
+
 	$scope.signIn = {
 		email: "a@a.com",
 		password:"password"
